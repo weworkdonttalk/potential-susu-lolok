@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NUSAVA — Dashboard Mitra Pengrajin & Maestro</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandDark: '#241B16',
+            brandGold: '#C5A059',
+            brandGoldHover: '#B38F46',
+            brandCream: '#F5EFE6',
+            brandParchment: '#FAF7F2',
+            brandBorder: '#EDE4D5',
+            brandMuted: '#6B5E55',
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Playfair Display"', 'Georgia', 'serif'],
+            cinzel: ['"Cinzel"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #FAF7F2; }
+    ::-webkit-scrollbar-thumb { background: #EDE4D5; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #C5A059; }
+
+    /* Glass Effect */
+    .glass-panel {
+      background: rgba(250, 247, 242, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+  </style>
+</head>
+<body class="bg-[#F8F9FA] text-[#2B231D] font-sans antialiased flex h-screen overflow-hidden">
+
+  <!-- MOBILE SIDEBAR BACKDROP -->
+  <div id="sidebar-backdrop" class="fixed inset-0 bg-black/40 z-30 lg:hidden hidden"></div>
+
+  <!-- =========================================================================
+       SIDEBAR NAVIGATION (Exact match to BagUI / Modern SaaS Store Dashboard)
+       ========================================================================= -->
+  <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 w-64 bg-white border-r border-gray-200 z-40 flex flex-col justify-between transition-transform duration-300 transform -translate-x-full lg:translate-x-0">
+    <div class="flex flex-col h-full overflow-y-auto">
+      
+      <!-- Logo Header -->
+      <div class="h-16 px-6 flex items-center justify-between border-b border-gray-100 flex-shrink-0">
+        <a href="index.html" class="flex items-center gap-3 group" title="Kembali ke Beranda Nusava">
+          <img src="assets/images/logonusava.jpg" alt="Nusava" class="h-8 w-auto object-contain rounded-sm" />
+          <div class="flex flex-col">
+            <span class="font-cinzel font-bold text-sm tracking-wider text-[#241B16] leading-tight">NUSAVA</span>
+            <span class="text-[9px] font-sans uppercase tracking-widest text-[#C5A059] font-bold">Studio Pengrajin</span>
+          </div>
+        </a>
+        <button id="sidebar-close-btn" class="lg:hidden text-gray-400 hover:text-gray-700 p-1" aria-label="Tutup Menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Quick Search Bar -->
+      <div class="px-4 pt-4 pb-2">
+        <div class="relative">
+          <svg class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <input 
+            type="text" 
+            id="sidebar-search" 
+            placeholder="Cari karya, pesanan..." 
+            class="w-full pl-9 pr-8 py-1.5 text-xs bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-[#C5A059] focus:bg-white text-gray-700 placeholder-gray-400 transition-all"
+          />
+          <kbd class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[9px] text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200 font-mono">⌘K</kbd>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="px-3 py-3 space-y-6 flex-1">
+        
+        <!-- Main Menu -->
+        <div>
+          <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5 font-sans">Menu Utama</p>
+          <nav class="space-y-0.5">
+            <a href="#overview" class="flex items-center gap-3 px-3 py-2 text-xs font-semibold rounded-lg bg-gray-100 text-[#241B16] transition-colors">
+              <svg class="w-4 h-4 text-[#C5A059]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+              <span>Dashboard</span>
+            </a>
+            <a href="#katalog" class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+              <span>Katalog Pusaka</span>
+              <span class="ml-auto text-[10px] bg-gray-100 px-1.5 py-0.5 rounded text-gray-500 font-mono" id="sidebar-product-count">8</span>
+            </a>
+            <a href="#pesanan" class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              <span>Pesanan Masuk</span>
+              <span class="ml-auto text-[10px] bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded font-bold">3 Baru</span>
+            </a>
+            <a href="#kolektor" class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+              <span>Kolektor & Pembeli</span>
+            </a>
+            <a href="#pesan" class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+              <span>Konsultasi Kriya AI</span>
+              <span class="ml-auto w-2 h-2 rounded-full bg-[#C5A059]"></span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Tools Section -->
+        <div>
+          <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5 font-sans">Alat & Kurasi</p>
+          <nav class="space-y-0.5">
+            <a href="#kurasi" class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              <span>Sertifikasi WBTb</span>
+            </a>
+            <a href="#analitik" class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+              <span>Statistik Penjualan</span>
+            </a>
+            <a href="#logistik" class="flex items-center gap-3 px-3 py-2 text-xs font-medium rounded-lg text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+              <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              <span>Logistik Pusaka</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Workspace Section -->
+        <div>
+          <p class="px-3 text-[10px] font-bold uppercase tracking-wider text-gray-400 mb-1.5 font-sans">Workspace</p>
+          <div class="space-y-1">
+            <div class="flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer">
+              <span class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-[#C5A059]"></span>
+                <span>Pameran Budaya 2026</span>
+              </span>
+              <span class="text-[10px] text-gray-400">5</span>
+            </div>
+            <div class="flex items-center justify-between px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 rounded-lg cursor-pointer">
+              <span class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span>Katalog WBTb UNESCO</span>
+              </span>
+              <span class="text-[10px] text-gray-400">4</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer User Card -->
+      <div class="p-4 border-t border-gray-100 flex-shrink-0 bg-gray-50/60">
+        <div class="flex items-center gap-3 mb-3">
+          <img src="assets/images/pengrajin-ukir.jpg" alt="I Wayan Sukadana" class="w-10 h-10 rounded-full object-cover border-2 border-[#C5A059]" />
+          <div class="flex-1 min-w-0">
+            <p class="text-xs font-bold text-gray-900 truncate" id="user-display-name">I Wayan Sukadana</p>
+            <p class="text-[10px] text-[#C5A059] font-medium truncate">Maestro Ukir · Gianyar</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="index.html" class="flex-1 py-1.5 px-2 bg-white hover:bg-gray-100 border border-gray-200 rounded text-[11px] font-medium text-gray-700 text-center transition-colors">
+            ← Ke Web Utama
+          </a>
+          <button id="dashboard-logout-btn" class="py-1.5 px-2.5 bg-white hover:bg-red-50 border border-gray-200 text-red-600 hover:border-red-200 rounded text-[11px] font-medium transition-colors" title="Keluar">
+            Keluar
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       MAIN CONTENT WRAPPER
+       ========================================================================= -->
+  <main class="flex-1 flex flex-col min-w-0 overflow-y-auto bg-gray-50">
+    
+    <!-- Top Bar -->
+    <header class="h-16 bg-white border-b border-gray-200 px-6 flex items-center justify-between sticky top-0 z-20">
+      
+      <!-- Left: Mobile Menu Trigger & Page Title -->
+      <div class="flex items-center gap-3">
+        <button id="sidebar-toggle-btn" class="lg:hidden p-1.5 text-gray-600 hover:text-gray-900 rounded-md hover:bg-gray-100" aria-label="Buka Menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div>
+          <h1 class="text-lg font-bold text-gray-900 font-sans leading-tight">Dashboard Pengrajin</h1>
+          <p class="text-[11px] text-gray-500 font-normal">Kelola karya kriya, inventaris pusaka, dan pesanan terverifikasi</p>
+        </div>
+      </div>
+
+      <!-- Right Action Items -->
+      <div class="flex items-center gap-3">
+        
+        <!-- Live Verified Badge -->
+        <span class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+          Mitra Terkurasi WBTb
+        </span>
+
+        <!-- Notification Bell -->
+        <button class="relative p-2 text-gray-500 hover:text-gray-800 rounded-lg hover:bg-gray-100 transition-colors" aria-label="Notifikasi">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500"></span>
+        </button>
+
+        <!-- Primary CTA: Tambah Karya -->
+        <button id="open-add-modal-btn" class="inline-flex items-center gap-2 px-4 py-2 bg-[#241B16] hover:bg-[#382B23] text-white text-xs font-semibold rounded-lg shadow-sm transition-all hover:scale-[1.02] cursor-pointer">
+          <svg class="w-4 h-4 text-[#C5A059]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <span>+ Tambah Karya Kriya</span>
+        </button>
+
+      </div>
+    </header>
+
+    <!-- Page Content Container -->
+    <div class="p-6 sm:p-8 space-y-6 max-w-7xl w-full mx-auto">
+      
+      <!-- =====================================================================
+           1. METRICS / KPI CARDS (Matching Screenshot 4-card row)
+           ===================================================================== -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Metric 1: Total Revenue -->
+        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between text-gray-500 mb-2">
+            <span class="text-xs font-medium">Total Pendapatan Kriya</span>
+            <span class="text-gray-400 hover:text-gray-600 cursor-pointer" title="Perhitungan pendapatan bersih pengrajin">ⓘ</span>
+          </div>
+          <div class="flex items-baseline gap-2 mb-2">
+            <span class="text-2xl font-bold text-gray-900 tracking-tight" id="metric-revenue">Rp 48.290.000</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-xs text-gray-500">
+            <span class="inline-flex items-center text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-bold text-[11px]">↗ +12%</span>
+            <span>vs bulan lalu</span>
+          </div>
+        </div>
+
+        <!-- Metric 2: Active Works -->
+        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between text-gray-500 mb-2">
+            <span class="text-xs font-medium">Karya Terkurasi Aktif</span>
+            <span class="text-gray-400 hover:text-gray-600 cursor-pointer">ⓘ</span>
+          </div>
+          <div class="flex items-baseline gap-2 mb-2">
+            <span class="text-2xl font-bold text-gray-900 tracking-tight" id="metric-products">24 Pusaka</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-xs text-gray-500">
+            <span class="inline-flex items-center text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-bold text-[11px]">↗ +4 karya</span>
+            <span>bulan ini</span>
+          </div>
+        </div>
+
+        <!-- Metric 3: Orders Completed -->
+        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between text-gray-500 mb-2">
+            <span class="text-xs font-medium">Pesanan Terpenuhi</span>
+            <span class="text-gray-400 hover:text-gray-600 cursor-pointer">ⓘ</span>
+          </div>
+          <div class="flex items-baseline gap-2 mb-2">
+            <span class="text-2xl font-bold text-gray-900 tracking-tight">88 Pesanan</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-xs text-gray-500">
+            <span class="inline-flex items-center text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-bold text-[11px]">↗ +98.4%</span>
+            <span>kepuasan kolektor</span>
+          </div>
+        </div>
+
+        <!-- Metric 4: Reputation Rating -->
+        <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-xs flex flex-col justify-between">
+          <div class="flex items-center justify-between text-gray-500 mb-2">
+            <span class="text-xs font-medium">Reputasi Kurasi Maestro</span>
+            <span class="text-gray-400 hover:text-gray-600 cursor-pointer">ⓘ</span>
+          </div>
+          <div class="flex items-baseline gap-2 mb-2">
+            <span class="text-2xl font-bold text-gray-900 tracking-tight">4.9 / 5.0</span>
+          </div>
+          <div class="flex items-center gap-1.5 text-xs text-gray-500">
+            <span class="inline-flex items-center text-[#C5A059] bg-amber-50 px-1.5 py-0.5 rounded font-bold text-[11px]">★ Sangat Baik</span>
+            <span>Mitra Utama</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- =====================================================================
+           2. FILTER & ACTION TOOLBAR (Matching BagUI table controls)
+           ===================================================================== -->
+      <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-xs space-y-4">
+        
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          
+          <!-- Left Controls: Category Pills & Search -->
+          <div class="flex flex-wrap items-center gap-2">
+            
+            <!-- Category Filter Dropdown -->
+            <div class="relative">
+              <select id="filter-category" class="pl-3 pr-8 py-1.5 text-xs font-medium bg-gray-50 border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none focus:border-[#C5A059] cursor-pointer appearance-none">
+                <option value="ALL">Semua Kategori Budaya</option>
+                <option value="Wastra">Wastra & Tenun</option>
+                <option value="Kayu">Kriya Kayu & Ukir</option>
+                <option value="Logam">Kriya Logam & Keris</option>
+                <option value="Anyaman">Anyaman & Serat Alam</option>
+              </select>
+              <svg class="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+
+            <!-- Status Filter Dropdown -->
+            <div class="relative">
+              <select id="filter-status" class="pl-3 pr-8 py-1.5 text-xs font-medium bg-gray-50 border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-100 focus:outline-none focus:border-[#C5A059] cursor-pointer appearance-none">
+                <option value="ALL">Semua Status Kurasi</option>
+                <option value="Terkurasi WBTb">Terkurasi WBTb</option>
+                <option value="Siap Kirim">Siap Kirim</option>
+                <option value="Verifikasi Kurator">Verifikasi Kurator</option>
+                <option value="Pre-Order">Pre-Order</option>
+              </select>
+              <svg class="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </div>
+
+            <!-- Table Search Input -->
+            <div class="relative min-w-[220px]">
+              <svg class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <input 
+                type="text" 
+                id="table-search" 
+                placeholder="Cari nama karya pusaka..." 
+                class="w-full pl-8 pr-3 py-1.5 text-xs bg-gray-50 border border-gray-200 rounded-lg text-gray-700 placeholder-gray-400 focus:outline-none focus:border-[#C5A059] focus:bg-white transition-all"
+              />
+            </div>
+
+          </div>
+
+          <!-- Right Controls: Export & Add -->
+          <div class="flex items-center gap-2">
+            <button id="export-csv-btn" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg text-gray-700 transition-colors shadow-xs">
+              <svg class="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+              <span>Export CSV</span>
+            </button>
+            <button id="add-karya-btn-alt" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold bg-[#C5A059] hover:bg-[#B38F46] text-white rounded-lg transition-colors shadow-xs">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              <span>+ Tambah Karya</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- =====================================================================
+             3. DATA TABLE (Daftar Karya & Pusaka Pengrajin)
+             ===================================================================== -->
+        <div class="overflow-x-auto border border-gray-200 rounded-lg">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-gray-50/80 border-b border-gray-200 text-gray-500 font-semibold uppercase tracking-wider text-[10px]">
+                <th class="py-3 px-4 w-10 text-center">
+                  <input type="checkbox" id="check-all" class="rounded border-gray-300 text-[#C5A059] focus:ring-[#C5A059] cursor-pointer" />
+                </th>
+                <th class="py-3 px-4 min-w-[260px]">Karya Pusaka & Asal</th>
+                <th class="py-3 px-4">Kategori</th>
+                <th class="py-3 px-4">Harga / Nilai</th>
+                <th class="py-3 px-4">Stok</th>
+                <th class="py-3 px-4">Status Kurasi</th>
+                <th class="py-3 px-4">Terjual</th>
+                <th class="py-3 px-4 text-right">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="product-table-body" class="divide-y divide-gray-100 font-sans">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table Pagination Footer -->
+        <div class="flex items-center justify-between text-xs text-gray-500 pt-2 px-1">
+          <div class="flex items-center gap-2">
+            <span>Menampilkan</span>
+            <span id="showing-count" class="font-bold text-gray-700">8</span>
+            <span>karya kriya nusantara</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button class="px-2.5 py-1 rounded border border-gray-200 bg-white hover:bg-gray-50 text-gray-600 disabled:opacity-40" disabled>Sebelumnya</button>
+            <span class="px-2 py-1 font-bold bg-gray-900 text-white rounded text-[11px]">1</span>
+            <button class="px-2.5 py-1 rounded border border-gray-200 bg-white hover:bg-gray-50 text-gray-600 disabled:opacity-40" disabled>Berikutnya</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       MODAL: + TAMBAH KARYA KRIYA BARU
+       ========================================================================= -->
+  <div id="add-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 sm:p-6 hidden">
+    <div class="bg-white rounded-2xl max-w-xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-100 flex flex-col">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between sticky top-0 bg-white z-10">
+        <div>
+          <h3 class="text-base font-bold text-gray-900 font-sans">Posting Karya Kriya Baru</h3>
+          <p class="text-xs text-gray-500">Karya akan didaftarkan ke kurasi digital Nusava</p>
+        </div>
+        <button id="close-add-modal-btn" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-800 transition-colors" aria-label="Tutup">
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Form -->
+      <form id="add-product-form" class="p-6 space-y-4 flex-1">
+        
+        <!-- Nama Produk -->
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1">Nama Karya / Pusaka <span class="text-red-500">*</span></label>
+          <input 
+            type="text" 
+            id="input-name" 
+            required 
+            placeholder="Contoh: Panel Pahat Relief Bunga Jepara" 
+            class="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-[#C5A059] focus:ring-1 focus:ring-[#C5A059]"
+          />
+        </div>
+
+        <!-- Grid Kategori & Wilayah -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1">Kategori Budaya <span class="text-red-500">*</span></label>
+            <select id="input-category" required class="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-[#C5A059] bg-white">
+              <option value="Wastra">Wastra & Tenun</option>
+              <option value="Kayu" selected>Kriya Kayu & Ukir</option>
+              <option value="Logam">Kriya Logam & Pusaka</option>
+              <option value="Anyaman">Anyaman & Serat Alam</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1">Asal Wilayah / Desa <span class="text-red-500">*</span></label>
+            <input 
+              type="text" 
+              id="input-origin" 
+              required 
+              placeholder="Contoh: Gianyar, Bali" 
+              class="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-[#C5A059]"
+            />
+          </div>
+        </div>
+
+        <!-- Grid Harga & Stok -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1">Harga Jual (Rp) <span class="text-red-500">*</span></label>
+            <input 
+              type="number" 
+              id="input-price" 
+              required 
+              min="10000" 
+              placeholder="Contoh: 3500000" 
+              class="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-[#C5A059]"
+            />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1">Jumlah Stok <span class="text-red-500">*</span></label>
+            <input 
+              type="number" 
+              id="input-stock" 
+              required 
+              min="1" 
+              value="3" 
+              class="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-[#C5A059]"
+            />
+          </div>
+        </div>
+
+        <!-- Status Kurasi -->
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1">Status Kurasi WBTb</label>
+          <select id="input-status" class="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-[#C5A059] bg-white">
+            <option value="Terkurasi WBTb" selected>🟢 Terkurasi WBTb (Kemendikbud)</option>
+            <option value="Siap Kirim">🔵 Siap Kirim (Stok Tersedia)</option>
+            <option value="Verifikasi Kurator">🟡 Verifikasi Kurator (Penilaian)</option>
+            <option value="Pre-Order">🟣 Pre-Order (Pengerjaan 14 Hari)</option>
+          </select>
+        </div>
+
+        <!-- Foto Karya -->
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1">Pilih Sampel Foto Karya</label>
+          <div class="grid grid-cols-4 gap-2 mb-2">
+            <label class="relative cursor-pointer border-2 border-transparent has-[:checked]:border-[#C5A059] rounded-lg overflow-hidden group">
+              <input type="radio" name="sample-img" value="assets/images/content/wilayah-sulawesi-tongkonan.jpg" checked class="sr-only" />
+              <img src="assets/images/content/wilayah-sulawesi-tongkonan.jpg" alt="Sampel Ukir Toraja" class="w-full h-14 object-cover" />
+              <span class="absolute inset-0 bg-black/30 group-hover:bg-transparent"></span>
+            </label>
+            <label class="relative cursor-pointer border-2 border-transparent has-[:checked]:border-[#C5A059] rounded-lg overflow-hidden group">
+              <input type="radio" name="sample-img" value="assets/images/content/wilayah-kalimantan-talawang.jpg" class="sr-only" />
+              <img src="assets/images/content/wilayah-kalimantan-talawang.jpg" alt="Sampel Talawang" class="w-full h-14 object-cover" />
+              <span class="absolute inset-0 bg-black/30 group-hover:bg-transparent"></span>
+            </label>
+            <label class="relative cursor-pointer border-2 border-transparent has-[:checked]:border-[#C5A059] rounded-lg overflow-hidden group">
+              <input type="radio" name="sample-img" value="assets/images/content/jurnal-tenun-lambanapu.jpg" class="sr-only" />
+              <img src="assets/images/content/jurnal-tenun-lambanapu.jpg" alt="Sampel Tenun Sumba" class="w-full h-14 object-cover" />
+              <span class="absolute inset-0 bg-black/30 group-hover:bg-transparent"></span>
+            </label>
+            <label class="relative cursor-pointer border-2 border-transparent has-[:checked]:border-[#C5A059] rounded-lg overflow-hidden group">
+              <input type="radio" name="sample-img" value="assets/images/content/jurnal-keris-jawa.jpg" class="sr-only" />
+              <img src="assets/images/content/jurnal-keris-jawa.jpg" alt="Sampel Keris Jawa" class="w-full h-14 object-cover" />
+              <span class="absolute inset-0 bg-black/30 group-hover:bg-transparent"></span>
+            </label>
+          </div>
+          <p class="text-[10px] text-gray-500">Klik salah satu foto sampel asli karya di atas.</p>
+        </div>
+
+        <!-- Deskripsi Filosofis -->
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1">Filosofi & Bahan Alami</label>
+          <textarea 
+            id="input-desc" 
+            rows="3" 
+            placeholder="Jelaskan makna simbolik motif dan bahan alami yang digunakan..." 
+            class="w-full px-3 py-2 text-xs border border-gray-300 rounded-lg focus:outline-none focus:border-[#C5A059]"
+          ></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-3 border-t border-gray-100 flex items-center justify-end gap-2">
+          <button type="button" id="cancel-add-btn" class="px-4 py-2 text-xs text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition-colors">
+            Batal
+          </button>
+          <button type="submit" class="px-5 py-2 text-xs font-semibold text-white bg-[#C5A059] hover:bg-[#B38F46] rounded-lg shadow-sm transition-all hover:scale-[1.02]">
+            Simpan Karya Pusaka
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       TOAST NOTIFICATION
+       ========================================================================= -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[#241B16] text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 border border-[#C5A059] transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <span class="text-[#C5A059] text-base font-bold">✦</span>
+    <span id="toast-text" class="text-xs font-medium">Karya berhasil ditambahkan!</span>
+  </div>
+
+  <!-- =========================================================================
+       JAVASCRIPT: REACTIVE DASHBOARD LOGIC (Vanilla ES6)
+       ========================================================================= -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      'use strict';
+
+      // 1. Initial State Data
+      const INITIAL_PRODUCTS = [
+        {
+          id: 'KRY-001',
+          name: "Panel Pahat Pa'tedong Tongkonan",
+          category: 'Kayu',
+          origin: 'Kete Kesu, Tana Toraja',
+          price: 4250000,
+          stock: 4,
+          status: 'Terkurasi WBTb',
+          sold: 18,
+          img: 'assets/images/content/wilayah-sulawesi-tongkonan.jpg',
+          desc: "Kayu ulin berukir motif kepala kerbau Pa'tedong simbol kemakmuran dan kearifan leluhur Toraja."
+        },
+        {
+          id: 'KRY-002',
+          name: 'Perisai Talawang Motif Kamang Dayak',
+          category: 'Kayu',
+          origin: 'Hulu Sungai Mahakam, Kaltim',
+          price: 2850000,
+          stock: 6,
+          status: 'Siap Kirim',
+          sold: 12,
+          img: 'assets/images/content/wilayah-kalimantan-talawang.jpg',
+          desc: 'Pahat kayu besi ulin bertatahkan motif flora sulur dan satwa mitologi penangkal mara bahaya.'
+        },
+        {
+          id: 'KRY-003',
+          name: 'Tenun Ikat Pewarna Alami Sumba',
+          category: 'Wastra',
+          origin: 'Lambanapu, Sumba Timur',
+          price: 3600000,
+          stock: 2,
+          status: 'Terkurasi WBTb',
+          sold: 9,
+          img: 'assets/images/content/jurnal-tenun-lambanapu.jpg',
+          desc: 'Ditenun tangan selama 8 bulan menggunakan 40 kali celupan daun nila dan akar mengkudu asli.'
+        },
+        {
+          id: 'KRY-004',
+          name: 'Batik Tulis Nitik Kuno Imogiri',
+          category: 'Wastra',
+          origin: 'Giriloyo, DI Yogyakarta',
+          price: 1950000,
+          stock: 8,
+          status: 'Terkurasi WBTb',
+          sold: 27,
+          img: 'assets/images/content/jurnal-batik-giriloyo.jpg',
+          desc: 'Canting cawang kuno motif tertua Mataram berstatus Indikasi Geografis resmi Kemendikbud.'
+        },
+        {
+          id: 'KRY-005',
+          name: 'Keris Jawa Ladrang Pamor Meteorit',
+          category: 'Logam',
+          origin: 'Surakarta, Jawa Tengah',
+          price: 8500000,
+          stock: 1,
+          status: 'Terkurasi WBTb',
+          sold: 3,
+          img: 'assets/images/content/jurnal-keris-jawa.jpg',
+          desc: 'Tempaan ratusan lipatan besi, baja, dan titanium meteorit dengan doa spiritual tirakat empu.'
+        },
+        {
+          id: 'KRY-006',
+          name: 'Songket Lepus Emas Benang Perak',
+          category: 'Wastra',
+          origin: 'Palembang, Sumatera Selatan',
+          price: 6200000,
+          stock: 3,
+          status: 'Siap Kirim',
+          sold: 7,
+          img: 'assets/images/content/produk-songket-palembang.jpg',
+          desc: 'Ratu Segala Kain dengan helai pakan emas murni peninggalan kemegahan Kerajaan Sriwijaya.'
+        },
+        {
+          id: 'KRY-007',
+          name: 'Patung Figur Bisj Roh Leluhur Asmat',
+          category: 'Kayu',
+          origin: 'Agats, Papua Selatan',
+          price: 5400000,
+          stock: 2,
+          status: 'Verifikasi Kurator',
+          sold: 5,
+          img: 'assets/images/content/wilayah-papua-asmat.jpg',
+          desc: 'Dipahat langsung oleh Wow-ipits dari kayu bakau rawa sebagai penghormatan arwah leluhur.'
+        },
+        {
+          id: 'KRY-008',
+          name: 'Anyaman Kotak Ketak Rumput Liar',
+          category: 'Anyaman',
+          origin: 'Beleka, Lombok Tengah',
+          price: 780000,
+          stock: 15,
+          status: 'Siap Kirim',
+          sold: 44,
+          img: 'assets/images/content/produk-ketak-lombok.jpg',
+          desc: 'Anyaman serat paku hutan yang diawetkan lewat proses pengasapan tempurung kelapa berhari-hari.'
+        }
+      ];
+
+      // Load products from localStorage or fallback
+      let products = [];
+      try {
+        const stored = localStorage.getItem('nusava_artisan_products');
+        if (stored) {
+          products = JSON.parse(stored);
+        } else {
+          products = INITIAL_PRODUCTS;
+          localStorage.setItem('nusava_artisan_products', JSON.stringify(products));
+        }
+      } catch (e) {
+        products = INITIAL_PRODUCTS;
+      }
+
+      // Check current auth user
+      try {
+        const auth = JSON.parse(localStorage.getItem('nusava_auth') || '{}');
+        if (auth.name) {
+          const userDisplay = document.getElementById('user-display-name');
+          if (userDisplay) userDisplay.textContent = auth.name;
+        }
+      } catch (e) {}
+
+      // DOM Elements
+      const tbody = document.getElementById('product-table-body');
+      const tableSearch = document.getElementById('table-search');
+      const filterCategory = document.getElementById('filter-category');
+      const filterStatus = document.getElementById('filter-status');
+      const countEl = document.getElementById('showing-count');
+      const sidebarCount = document.getElementById('sidebar-product-count');
+      const metricCount = document.getElementById('metric-products');
+
+      // Helper Formats
+      const formatRp = (val) => 'Rp ' + Number(val).toLocaleString('id-ID');
+
+      // Status Badge Component
+      const getStatusBadge = (status) => {
+        switch (status) {
+          case 'Terkurasi WBTb':
+            return '<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">🟢 Terkurasi WBTb</span>';
+          case 'Siap Kirim':
+            return '<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">🔵 Siap Kirim</span>';
+          case 'Verifikasi Kurator':
+            return '<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">🟡 Verifikasi</span>';
+          case 'Pre-Order':
+            return '<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-200">🟣 Pre-Order</span>';
+          default:
+            return `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-gray-50 text-gray-700 border border-gray-200">${status}</span>`;
+        }
+      };
+
+      // Render Table
+      function renderTable() {
+        const query = (tableSearch.value || '').toLowerCase().trim();
+        const cat = filterCategory.value;
+        const stat = filterStatus.value;
+
+        const filtered = products.filter(p => {
+          const matchQuery = p.name.toLowerCase().includes(query) || p.origin.toLowerCase().includes(query) || p.id.toLowerCase().includes(query);
+          const matchCat = (cat === 'ALL') || (p.category === cat);
+          const matchStat = (stat === 'ALL') || (p.status === stat);
+          return matchQuery && matchCat && matchStat;
+        });
+
+        if (countEl) countEl.textContent = filtered.length;
+        if (sidebarCount) sidebarCount.textContent = products.length;
+        if (metricCount) metricCount.textContent = `${products.length} Pusaka`;
+
+        if (!filtered.length) {
+          tbody.innerHTML = `
+            <tr>
+              <td colspan="8" class="py-12 text-center text-gray-400">
+                <p class="text-sm font-medium">Tidak ada karya kriya yang cocok dengan filter.</p>
+                <button id="reset-filter-btn" class="mt-2 text-xs text-[#C5A059] hover:underline font-semibold">Reset Filter</button>
+              </td>
+            </tr>
+          `;
+          document.getElementById('reset-filter-btn')?.addEventListener('click', () => {
+            tableSearch.value = '';
+            filterCategory.value = 'ALL';
+            filterStatus.value = 'ALL';
+            renderTable();
+          });
+          return;
+        }
+
+        tbody.innerHTML = filtered.map(p => `
+          <tr class="hover:bg-gray-50/80 transition-colors group">
+            <td class="py-3 px-4 text-center">
+              <input type="checkbox" class="product-checkbox rounded border-gray-300 text-[#C5A059] focus:ring-[#C5A059] cursor-pointer" />
+            </td>
+            <td class="py-3 px-4">
+              <div class="flex items-center gap-3">
+                <img src="${p.img}" alt="${p.name}" class="w-10 h-10 rounded-lg object-cover border border-gray-200 flex-shrink-0" onerror="this.src='assets/images/logonusava.png'" />
+                <div class="min-w-0">
+                  <p class="font-bold text-gray-900 truncate group-hover:text-[#C5A059] transition-colors">${p.name}</p>
+                  <p class="text-[10px] text-gray-500 truncate">🏛️ ${p.origin} · <span class="font-mono text-gray-400">${p.id}</span></p>
+                </div>
+              </div>
+            </td>
+            <td class="py-3 px-4">
+              <span class="px-2 py-0.5 bg-gray-100 rounded text-gray-700 font-medium text-[10px]">${p.category}</span>
+            </td>
+            <td class="py-3 px-4 font-bold text-gray-900">${formatRp(p.price)}</td>
+            <td class="py-3 px-4">
+              <span class="font-semibold ${p.stock <= 2 ? 'text-amber-600' : 'text-gray-700'}">${p.stock} unit</span>
+            </td>
+            <td class="py-3 px-4">${getStatusBadge(p.status)}</td>
+            <td class="py-3 px-4 text-gray-600 font-medium">${p.sold || 0} unit</td>
+            <td class="py-3 px-4 text-right">
+              <div class="flex items-center justify-end gap-1.5">
+                <button class="delete-btn p-1.5 text-gray-400 hover:text-red-600 rounded hover:bg-red-50 transition-colors" data-id="${p.id}" title="Hapus Karya">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `).join('');
+
+        // Attach delete events
+        tbody.querySelectorAll('.delete-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = btn.dataset.id;
+            const target = products.find(x => x.id === id);
+            if (!target) return;
+            if (confirm(`Yakin ingin menghapus karya "${target.name}" dari katalog?`)) {
+              products = products.filter(x => x.id !== id);
+              localStorage.setItem('nusava_artisan_products', JSON.stringify(products));
+              renderTable();
+              showToast(`Karya "${target.name}" berhasil dihapus.`);
+            }
+          });
+        });
+      }
+
+      // Initial render
+      renderTable();
+
+      // Filter & Search Events
+      tableSearch?.addEventListener('input', renderTable);
+      filterCategory?.addEventListener('change', renderTable);
+      filterStatus?.addEventListener('change', renderTable);
+
+      // Modal Elements
+      const addModal = document.getElementById('add-modal');
+      const openAddBtn = document.getElementById('open-add-modal-btn');
+      const openAddBtnAlt = document.getElementById('add-karya-btn-alt');
+      const closeAddBtn = document.getElementById('close-add-modal-btn');
+      const cancelAddBtn = document.getElementById('cancel-add-btn');
+      const addForm = document.getElementById('add-product-form');
+
+      const openModal = () => {
+        addModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      };
+
+      const closeModal = () => {
+        addModal.classList.add('hidden');
+        document.body.style.overflow = '';
+      };
+
+      openAddBtn?.addEventListener('click', openModal);
+      openAddBtnAlt?.addEventListener('click', openModal);
+      closeAddBtn?.addEventListener('click', closeModal);
+      cancelAddBtn?.addEventListener('click', closeModal);
+      addModal?.addEventListener('click', e => { if (e.target === addModal) closeModal(); });
+
+      // Handle Add Product Submission
+      addForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('input-name').value.trim();
+        const category = document.getElementById('input-category').value;
+        const origin = document.getElementById('input-origin').value.trim();
+        const price = Number(document.getElementById('input-price').value);
+        const stock = Number(document.getElementById('input-stock').value);
+        const status = document.getElementById('input-status').value;
+        const desc = document.getElementById('input-desc').value.trim();
+        
+        // Selected image radio
+        const selectedImg = document.querySelector('input[name="sample-img"]:checked')?.value || 'assets/images/content/wilayah-sulawesi-tongkonan.jpg';
+
+        const newId = 'KRY-00' + (products.length + 1);
+
+        const newProduct = {
+          id: newId,
+          name,
+          category,
+          origin,
+          price,
+          stock,
+          status,
+          sold: 0,
+          img: selectedImg,
+          desc: desc || 'Karya kriya tradisional terkurasi dengan pewarnaan alami dan filosofi budaya Nusantara.'
+        };
+
+        products.unshift(newProduct);
+        localStorage.setItem('nusava_artisan_products', JSON.stringify(products));
+
+        addForm.reset();
+        closeModal();
+        renderTable();
+        showToast(`✦ Karya "${name}" berhasil ditambahkan ke katalog kurasi!`);
+      });
+
+      // Export CSV Logic
+      document.getElementById('export-csv-btn')?.addEventListener('click', () => {
+        let csv = 'ID,Nama Karya,Kategori,Asal Wilayah,Harga,Stok,Status,Terjual\n';
+        products.forEach(p => {
+          csv += `"${p.id}","${p.name}","${p.category}","${p.origin}",${p.price},${p.stock},"${p.status}",${p.sold || 0}\n`;
+        });
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `katalog-kriya-nusava-${new Date().toISOString().slice(0, 10)}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('✦ File CSV katalog kriya berhasil diunduh!');
+      });
+
+      // Toast Notification
+      let toastTimer = null;
+      function showToast(msg) {
+        const toast = document.getElementById('toast');
+        const text = document.getElementById('toast-text');
+        if (!toast || !text) return;
+        text.textContent = msg;
+        toast.classList.remove('translate-y-20', 'opacity-0');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.add('translate-y-20', 'opacity-0');
+        }, 3500);
+      }
+
+      // Mobile Sidebar Toggle
+      const sidebar = document.getElementById('sidebar');
+      const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+      const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+      const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+
+      const openSidebar = () => {
+        sidebar?.classList.remove('-translate-x-full');
+        sidebarBackdrop?.classList.remove('hidden');
+      };
+      const closeSidebar = () => {
+        sidebar?.classList.add('-translate-x-full');
+        sidebarBackdrop?.classList.add('hidden');
+      };
+
+      sidebarToggleBtn?.addEventListener('click', openSidebar);
+      sidebarCloseBtn?.addEventListener('click', closeSidebar);
+      sidebarBackdrop?.addEventListener('click', closeSidebar);
+
+      // Logout handler
+      document.getElementById('dashboard-logout-btn')?.addEventListener('click', () => {
+        localStorage.removeItem('nusava_auth');
+        window.location.href = 'LOGIN/index.html';
+      });
+    });
+  </script>
+</body>
+</html>

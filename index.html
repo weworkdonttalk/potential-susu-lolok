@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nusava — Merawat Budaya, Menggerakkan Karya</title>
+  <meta name="description" content="Platform digital kurasi dan apresiasi warisan budaya Indonesia — jelajahi kepulauan Nusantara, dukung pengrajin lokal, dan temukan karya kriya otentik.">
+  <link rel="icon" type="image/jpeg" href="assets/images/logonusava.jpg">
+
+  <!-- Tailwind CSS CDN with custom config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            canvas:   '#F5EFE6',
+            surface:  '#FAF7F2',
+            'surface-elevated': '#EDE4D5',
+            ivory:    '#F5EFE6',
+            'ivory-soft': '#EDE4D5',
+            card:     '#FAF7F2',
+            dark:     '#241B16',
+            'dark-card': '#2D221C',
+            'dark-2': '#2D221C',
+            espresso: '#2B231D',
+            charcoal: '#6B5E55',
+            gold:     '#C5A059',
+            'gold-light': '#B38F46',
+            amber:    '#C5A059',
+            olive:    '#AEAC79',
+          },
+          fontFamily: {
+            cinzel:   ['"Cinzel"', '"Playfair Display"', 'Georgia', 'serif'],
+            display:  ['"Playfair Display"', 'Georgia', 'serif'],
+            garamond: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans:     ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          transitionTimingFunction: {
+            luxury: 'cubic-bezier(0.22, 1, 0.36, 1)',
+            expo:   'cubic-bezier(0.16, 1, 0.3, 1)',
+          },
+        }
+      }
+    }
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-[#F5EFE6] text-[#2B231D]">
+
+<!-- =========================================================================
+     NAVBAR — Luxury Minimalist Navigation (Exact Alignment with Figma Prototype)
+     ========================================================================= -->
+<header id="navbar" class="nav-flat-bar" aria-label="Main Navigation">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 w-full h-full flex items-center justify-between">
+    <!-- Brand Identity & Logo Integration -->
+    <a href="#hero" class="brand-link group" aria-label="Nusava Beranda">
+      <img src="assets/images/logonusava.jpg" alt="Logo Nusava" class="brand-logo-emblem" />
+      <span class="brand-title-text font-cinzel">NUSAVA</span>
+    </a>
+
+    <!-- Desktop Nav Menu -->
+    <nav class="hidden lg:flex items-center gap-5 xl:gap-7" aria-label="Navigasi Utama">
+      <a href="#jelajah" class="nav-link-item">Jelajah</a>
+      <a href="#ragam-budaya" class="nav-link-item">Warisan</a>
+      <a href="#produk" class="nav-link-item">Produk</a>
+      <a href="#ai-kustomisasi" class="nav-link-item">Asisten AI</a>
+      <a href="#ai-matchmaker" class="nav-link-item">Kuis AI</a>
+      <a href="#pasar" class="nav-link-item">Pasar Kriya</a>
+      <a href="#jurnal" class="nav-link-item">Jurnal</a>
+    </nav>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-2.5 sm:gap-3.5">
+      <!-- Cart -->
+      <button class="relative p-2 text-[#4A403A] hover:text-[#C5A059] transition-colors" aria-label="Keranjang">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+        <span id="cart-count" class="hidden absolute -top-1 -right-1 w-[18px] h-[18px] rounded-full bg-[#C5A059] text-white text-[11px] font-bold flex items-center justify-center leading-none">0</span>
+      </button>
+      
+      <!-- Login / Auth Container (Dynamic via JS) -->
+      <div id="nav-auth-container" class="relative">
+        <a href="LOGIN/index.html" id="nav-login-btn" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-[#C5A059]/60 hover:border-[#C5A059] bg-[#FAF7F2]/80 hover:bg-[#FAF7F2] text-[#2B231D] text-xs font-sans font-semibold tracking-wide transition-all shadow-xs">
+          <svg class="w-3.5 h-3.5 text-[#C5A059]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          <span>Masuk</span>
+        </a>
+      </div>
+
+      <!-- CTA Pill -->
+      <a href="#pasar" class="hidden sm:inline-flex nav-cta-pill">Dukung Pengrajin</a>
+      <!-- Hamburger -->
+      <button id="mobile-menu-btn" class="lg:hidden p-2 text-[#4A403A] hover:text-[#C5A059] transition-colors" aria-label="Buka Menu">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Drawer -->
+<div id="mobile-drawer" class="fixed inset-y-0 right-0 w-72 bg-[#F5EFE6] z-[1001] transform translate-x-full transition-transform duration-luxury shadow-2xl flex flex-col p-8">
+  <div class="flex items-center justify-between pb-6 border-b border-[rgba(197,160,89,0.2)]">
+    <div class="flex items-center gap-2.5">
+      <img src="assets/images/logonusava.jpg" alt="NUSAVA" class="h-8 w-auto object-contain" />
+      <span class="font-cinzel font-bold text-lg tracking-[0.12em] text-[#C5A059]">NUSAVA</span>
+    </div>
+    <button id="mobile-menu-close" class="text-[#2B231D] hover:text-[#C5A059] transition-colors" aria-label="Tutup">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <nav class="flex flex-col gap-4 mt-6 overflow-y-auto no-scrollbar">
+    <a href="#jelajah"        class="font-garamond text-lg font-normal text-[#2B231D] hover:text-[#C5A059] transition-colors border-b border-[rgba(197,160,89,0.15)] pb-3">Jelajah Kepulauan</a>
+    <a href="#ragam-budaya"   class="font-garamond text-lg font-normal text-[#2B231D] hover:text-[#C5A059] transition-colors border-b border-[rgba(197,160,89,0.15)] pb-3">Ragam Warisan</a>
+    <a href="#produk"         class="font-garamond text-lg font-normal text-[#2B231D] hover:text-[#C5A059] transition-colors border-b border-[rgba(197,160,89,0.15)] pb-3">Produk Nusani</a>
+    <a href="#ai-kustomisasi" class="font-garamond text-lg font-normal text-[#2B231D] hover:text-[#C5A059] transition-colors border-b border-[rgba(197,160,89,0.15)] pb-3">Tanya Asisten AI</a>
+    <a href="#ai-matchmaker"  class="font-garamond text-lg font-normal text-[#2B231D] hover:text-[#C5A059] transition-colors border-b border-[rgba(197,160,89,0.15)] pb-3">Kuis Pusaka AI</a>
+    <a href="#pasar"          class="font-garamond text-lg font-normal text-[#2B231D] hover:text-[#C5A059] transition-colors border-b border-[rgba(197,160,89,0.15)] pb-3">Pasar Kriya</a>
+    <a href="#jurnal"         class="font-garamond text-lg font-normal text-[#2B231D] hover:text-[#C5A059] transition-colors border-b border-[rgba(197,160,89,0.15)] pb-3">Jurnal Nusantara</a>
+    <a href="#testimoni"      class="font-garamond text-lg font-normal text-[#2B231D] hover:text-[#C5A059] transition-colors border-b border-[rgba(197,160,89,0.15)] pb-3">Testimoni</a>
+    <a href="#faq"            class="font-garamond text-lg font-normal text-[#2B231D] hover:text-[#C5A059] transition-colors border-b border-[rgba(197,160,89,0.15)] pb-3">Tanya Jawab</a>
+    <a href="#tim"            class="font-garamond text-lg font-normal text-[#2B231D] hover:text-[#C5A059] transition-colors">Tim Pengembang</a>
+  </nav>
+
+  <!-- Mobile Auth Section -->
+  <div id="mobile-auth-container" class="mt-4 pt-4 border-t border-[rgba(197,160,89,0.2)] flex flex-col gap-2.5">
+    <a href="LOGIN/index.html" id="mobile-login-btn" class="w-full py-2.5 px-4 text-center text-xs font-semibold tracking-wider text-[#2B231D] bg-[#FAF7F2] hover:bg-[#EDE4D5] rounded-full border border-[#C5A059]/50 flex items-center justify-center gap-2 transition-colors shadow-xs">
+      <svg class="w-4 h-4 text-[#C5A059]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+      <span>Masuk Akun</span>
+    </a>
+  </div>
+
+  <a href="#pasar" class="mt-3 w-full py-3 text-center text-[11px] font-bold tracking-[0.14em] uppercase bg-[#C5A059] text-[#FAF7F2] rounded-full hover:bg-[#B38F46] transition-colors shadow-sm">Dukung Pengrajin</a>
+</div>
+
+<!-- =========================================================================
+     HERO SECTION — editorial AYANA style (Elevated & Vertically Balanced)
+     ========================================================================= -->
+<section id="hero" class="snap-section relative overflow-hidden bg-[#F5EFE6] w-full">
+
+  <!-- Mega Mendung cloud backgrounds (Animated Smooth Drift) -->
+  <div class="cloud-parallax cloud-drift-anim absolute inset-0 pointer-events-none opacity-[0.065] bg-center bg-repeat-x"
+       style="background-image:url('assets/images/latar-ornamen-awan-jawa-tradisional-10.png')"></div>
+
+  <!-- Wayang ornaments (Animated & Harmoniously Framing Center Typography) -->
+  <div id="wayang-left-wrap" class="wayang-parallax hero-ornament absolute left-0 bottom-0 pointer-events-none select-none z-0 hidden sm:block">
+    <img id="wayang-left"
+         src="assets/images/wayang-kulit-jawa-berhias-emas-10.png"
+         alt="Wayang Kulit Tradisional Jawa"
+         aria-hidden="true"
+         class="w-[clamp(130px,15vw,220px)] max-h-[65vh] opacity-[0.45] lg:opacity-[0.65] object-contain object-bottom wayang-float-left">
+  </div>
+  <div id="wayang-right-wrap" class="wayang-parallax hero-ornament absolute right-0 bottom-0 pointer-events-none select-none z-0 hidden sm:block">
+    <img id="wayang-right"
+         src="assets/images/wayang-kulit-jawa-berhias-emas-20.png"
+         alt="Wayang Kulit Tradisional Jawa"
+         aria-hidden="true"
+         class="w-[clamp(130px,15vw,220px)] max-h-[65vh] opacity-[0.45] lg:opacity-[0.65] object-contain object-bottom scale-x-flip wayang-float-right">
+  </div>
+
+  <!-- Hero content (Elevated & Vertically Balanced) -->
+  <div class="relative z-10 w-full max-w-4xl mx-auto flex flex-col items-center justify-center text-center px-6">
+
+    <!-- Main heading -->
+    <h1 class="reveal delay-100 text-ayana-hero text-[clamp(2.7rem,6.8vw,5.2rem)] text-[#2B231D] max-w-4xl leading-[1.06] m-0">
+      Merawat Budaya<br>
+      <em class="text-[#C5A059]">Menggerakkan Karya</em>
+    </h1>
+
+    <!-- Tagline -->
+    <p class="reveal delay-200 mt-5 font-sans font-light text-base sm:text-lg text-[#6B5E55] max-w-lg leading-relaxed">
+      Ruang digital untuk merawat warisan budaya Nusantara — menghubungkan karya asli pengrajin dari Sabang sampai Merauke langsung ke tanganmu.
+    </p>
+
+    <!-- CTA pair -->
+    <div class="reveal delay-300 mt-8 flex flex-wrap items-center justify-center gap-4">
+      <a href="#jelajah" class="inline-flex items-center gap-2.5 px-8 py-3.5 bg-[#241B16] text-white text-[11px] font-sans font-bold tracking-[0.2em] uppercase rounded-full hover:bg-[#C5A059] hover:text-[#2B231D] transition-colors duration-300 shadow-md">
+        Mulai Jelajah
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      </a>
+      <a href="#pasar" class="inline-flex items-center gap-2.5 px-8 py-3.5 border border-[#2B231D] text-[#2B231D] text-[11px] font-sans font-bold tracking-[0.2em] uppercase rounded-full hover:border-[#C5A059] hover:text-[#C5A059] transition-colors duration-300">
+        Pasar Karya
+      </a>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="reveal delay-400 mt-10 flex flex-col items-center gap-2 text-[#6B5E55]">
+      <span class="text-[10px] font-sans font-semibold tracking-[0.22em] uppercase">Gulir ke Bawah</span>
+      <svg class="w-4 h-4 animate-bounce text-[#C5A059]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================
+     VIDEO ARCH SECTION — Wonderful Indonesia (Full Edge-to-Edge AYANA Bali)
+     ========================================================================= -->
+<section id="video-arch" class="relative w-full bg-[#F5EFE6] pb-0 overflow-hidden">
+  <!-- Subtle ambient gradient lighting -->
+  <div class="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-[#F5EFE6] via-[#EDE4D5]/50 to-transparent pointer-events-none"></div>
+
+  <!-- Section intro (Centered & Vertically Balanced) -->
+  <div class="max-w-4xl mx-auto px-6 text-center pt-10 pb-8 sm:pt-14 sm:pb-10 relative z-10">
+    <p class="text-eyebrow reveal mb-4">N° Intro : Film Nusantara</p>
+    <h2 class="reveal delay-100 font-display font-bold text-3xl sm:text-5xl lg:text-6xl text-[#2B231D] leading-tight">
+      Jelajahi Keindahan Budaya <span class="text-[#C5A059]">Nusantara</span>
+    </h2>
+    <p class="mt-4 text-[#6B5E55] text-base sm:text-lg max-w-xl mx-auto font-sans leading-relaxed">
+      Saksikan mahakarya ribuan pulau, tradisi luhur, dan kearifan para pengrajin dalam balutan sinematik layar penuh.
+    </p>
+  </div>
+
+  <!-- 100% Full-Bleed Edge-to-Edge Video Frame (Kiri ke Kanan Penuh ala AYANA Bali) -->
+  <div class="video-arch-wrapper w-full px-0 mx-0 relative">
+    <div id="video-arch-frame" class="video-arch-frame video-reveal relative w-full h-[75vh] sm:h-[88vh] lg:h-[95vh] min-h-[560px] sm:min-h-[720px] lg:min-h-[860px]">
+
+      <!-- Autoplay silent background YouTube video -->
+      <div class="video-bg-container absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+        <iframe
+          id="hero-video-bg"
+          class="yt-bg-iframe"
+          src="https://www.youtube.com/embed/IrcoYCD9-nM?autoplay=1&mute=1&loop=1&playlist=IrcoYCD9-nM&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=1"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <!-- Dark overlay gradient (Soft & luminous, eliminating gloomy black cast) -->
+      <div class="absolute inset-0 bg-gradient-to-t from-[#241B16]/35 via-transparent to-transparent pointer-events-none"></div>
+
+      <!-- Overlay text & CTA -->
+      <div class="absolute inset-0 flex flex-col items-center justify-end pb-14 sm:pb-24 px-6 text-center z-10">
+        <p class="text-eyebrow text-white/90 mb-3 reveal">Wonderful Indonesia</p>
+        <h3 class="reveal delay-100 font-garamond font-light italic text-white text-2xl sm:text-4xl lg:text-5xl leading-tight mb-8 drop-shadow-md">
+          Setiap sudut Nusantara<br>menyimpan cerita yang menunggu
+        </h3>
+
+        <!-- Play Movie CTA — Simple Full-Transparent Pill Button (User Audit) -->
+        <button data-open-modal="video"
+          class="video-play-btn reveal delay-200 inline-flex items-center gap-3 px-6 py-3 rounded-full border border-white/70 bg-transparent text-white hover:bg-white/15 hover:border-white transition-all cursor-pointer shadow-sm"
+          aria-label="Tonton Video">
+          <svg class="w-4 h-4 fill-white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <span class="text-white text-xs font-sans font-semibold tracking-[0.2em] uppercase">Tonton Video</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================
+     HIGHLIGHT STATS — AYANA big-number style (Seamless Clean Background)
+     ========================================================================= -->
+<section id="highlights" class="bg-[#F5EFE6] py-12 sm:py-20">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+    <!-- Section header -->
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-24 items-start mb-14 sm:mb-18">
+      <div class="reveal">
+        <p class="text-[11px] font-sans font-semibold tracking-[0.18em] uppercase text-[#6B5E55] mb-4">Tentang Nusantara</p>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl text-[#2B231D] leading-tight">
+          Kepulauan Terluas,<br>Budaya Terkaya di Dunia
+        </h2>
+      </div>
+      <div class="reveal delay-200">
+        <p class="font-sans text-[#6B5E55] leading-relaxed text-base mb-4">
+          Lewat Nusava, kami menghubungkan kamu langsung dengan ribuan pengrajin dan maestro budaya di berbagai pelosok Indonesia. Setiap helai kain tenun, ukiran kayu, dan nada musik punya cerita otentik yang kami kurasi bersama komunitas lokal.
+        </p>
+        <div class="flex items-center gap-3">
+          <img src="assets/images/pengrajin-batik.jpg" alt="Ibu Pembatik Tradisional Nusava" class="w-12 h-12 rounded-full object-cover border-2 border-[#C5A059]">
+          <img src="assets/images/pengrajin-tenun.jpg" alt="Mama Penenun Ikat Nusava" class="w-12 h-12 rounded-full object-cover border-2 border-[#C5A059] -ml-4">
+          <img src="assets/images/pengrajin-ukir.jpg" alt="Maestro Pengukir Nusava" class="w-12 h-12 rounded-full object-cover border-2 border-[#C5A059] -ml-4">
+          <span class="text-xs text-[#6B5E55] ml-2">10.000+ pengrajin tergabung</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats row (8pt Grid & Isolated Card Elevation with Safe Fluid Typography) -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+      <!-- Stat 1 -->
+      <div class="reveal card-isolated-elevation p-5 sm:p-7 flex flex-col justify-between overflow-hidden">
+        <div class="flex items-baseline gap-0.5 leading-none mb-3">
+          <span data-count="17000" data-suffix="+" class="stat-number font-display font-light text-2xl sm:text-3xl xl:text-4xl text-[#2B231D] whitespace-nowrap">0</span>
+        </div>
+        <div>
+          <p class="text-[11px] sm:text-xs font-sans font-bold tracking-[0.16em] uppercase text-[#2B231D]">Pulau Nusantara</p>
+          <span class="text-[9px] text-[#6B5E55]/80 block font-normal mt-1">Sumber: BIG & KKP RI</span>
+        </div>
+      </div>
+      <!-- Stat 2 -->
+      <div class="reveal delay-100 card-isolated-elevation p-5 sm:p-7 flex flex-col justify-between overflow-hidden">
+        <div class="flex items-baseline gap-0.5 leading-none mb-3">
+          <span data-count="1340" data-suffix="+" class="stat-number font-display font-light text-2xl sm:text-3xl xl:text-4xl text-[#2B231D] whitespace-nowrap">0</span>
+        </div>
+        <div>
+          <p class="text-[11px] sm:text-xs font-sans font-bold tracking-[0.16em] uppercase text-[#2B231D]">Suku Bangsa</p>
+          <span class="text-[9px] text-[#6B5E55]/80 block font-normal mt-1">Sumber: Sensus BPS RI</span>
+        </div>
+      </div>
+      <!-- Stat 3 -->
+      <div class="reveal delay-200 card-isolated-elevation p-5 sm:p-7 flex flex-col justify-between overflow-hidden">
+        <div class="flex items-baseline gap-0.5 leading-none mb-3">
+          <span data-count="718" data-suffix="" class="stat-number font-display font-light text-2xl sm:text-3xl xl:text-4xl text-[#2B231D] whitespace-nowrap">0</span>
+        </div>
+        <div>
+          <p class="text-[11px] sm:text-xs font-sans font-bold tracking-[0.16em] uppercase text-[#2B231D]">Bahasa Daerah</p>
+          <span class="text-[9px] text-[#6B5E55]/80 block font-normal mt-1">Sumber: Kemendikbudristek</span>
+        </div>
+      </div>
+      <!-- Stat 4 -->
+      <div class="reveal delay-300 card-isolated-elevation p-5 sm:p-7 flex flex-col justify-between overflow-hidden">
+        <div class="flex items-baseline gap-0.5 leading-none mb-3">
+          <span data-count="10000" data-suffix="+" class="stat-number font-display font-light text-2xl sm:text-3xl xl:text-4xl text-[#2B231D] whitespace-nowrap">0</span>
+        </div>
+        <div>
+          <p class="text-[11px] sm:text-xs font-sans font-bold tracking-[0.16em] uppercase text-[#2B231D]">Pengrajin Terhubung</p>
+          <span class="text-[9px] text-[#6B5E55]/80 block font-normal mt-1">Kurasi Komunitas Lokal</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================================
+     N° 01 — JELAJAH KEPULAUAN (Area Switcher — Showcase Besar & Interaktif)
+     ========================================================================= -->
+<section id="jelajah" class="bg-[#F5EFE6] py-12 sm:py-20">
+  <div class="max-w-[1540px] mx-auto px-4 sm:px-8 lg:px-12">
+
+    <!-- Chapter header (Single Clean Separator) -->
+    <div class="flex items-start gap-6 sm:gap-10 mb-14 sm:mb-20 pt-4">
+      <span class="text-chapter leading-none select-none flex-shrink-0">01</span>
+      <div class="pt-2">
+        <span class="section-index-badge reveal">N° 01 · JELAJAH AREA</span>
+        <h2 class="reveal delay-100 font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-[#2B231D] leading-tight">
+          Jelajah Kepulauan<br><span class="text-[#C5A059] italic font-normal font-garamond">Nusantara</span>
+        </h2>
+        <p class="reveal delay-200 mt-4 text-[#6B5E55] text-base sm:text-lg max-w-2xl font-sans leading-relaxed">
+          Pilih salah satu dari 6 zona kepulauan Nusantara untuk menjelajahi kearifan adat, arsitektur pusaka, dan ragam karya kriya otentik langsung dari pengrajin daerah.
+        </p>
+      </div>
+    </div>
+
+    <!-- Area tabs (Besar, Jelas, & Berkelas) -->
+    <div class="flex items-center gap-6 sm:gap-10 overflow-x-auto pb-4 mb-12 border-b border-[#EDE4D5] no-scrollbar reveal">
+      <button class="area-tab active flex items-center gap-2 pb-3.5" data-area="sumatera">
+        <span class="text-xs font-bold text-[#C5A059] tracking-widest uppercase">01</span>
+        <span class="font-display font-bold text-sm sm:text-base text-[#2B231D]">Sumatera</span>
+      </button>
+      <button class="area-tab flex items-center gap-2 pb-3.5" data-area="jawa">
+        <span class="text-xs font-bold text-[#C5A059] tracking-widest uppercase">02</span>
+        <span class="font-display font-bold text-sm sm:text-base text-[#2B231D]">Jawa</span>
+      </button>
+      <button class="area-tab flex items-center gap-2 pb-3.5" data-area="bali_nt">
+        <span class="text-xs font-bold text-[#C5A059] tracking-widest uppercase">03</span>
+        <span class="font-display font-bold text-sm sm:text-base text-[#2B231D]">Bali & Nusa Tenggara</span>
+      </button>
+      <button class="area-tab flex items-center gap-2 pb-3.5" data-area="kalimantan">
+        <span class="text-xs font-bold text-[#C5A059] tracking-widest uppercase">04</span>
+        <span class="font-display font-bold text-sm sm:text-base text-[#2B231D]">Kalimantan</span>
+      </button>
+      <button class="area-tab flex items-center gap-2 pb-3.5" data-area="sulawesi">
+        <span class="text-xs font-bold text-[#C5A059] tracking-widest uppercase">05</span>
+        <span class="font-display font-bold text-sm sm:text-base text-[#2B231D]">Sulawesi</span>
+      </button>
+      <button class="area-tab flex items-center gap-2 pb-3.5" data-area="maluku_papua">
+        <span class="text-xs font-bold text-[#C5A059] tracking-widest uppercase">06</span>
+        <span class="font-display font-bold text-sm sm:text-base text-[#2B231D]">Maluku & Papua</span>
+      </button>
+    </div>
+
+    <!-- Map + Info Grid (Skala Besar, Presisi & Seimbang) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+
+      <!-- Map column (7 cols — Showcase Peta Presisi) -->
+      <div class="lg:col-span-7 flex flex-col gap-6">
+        <div class="relative w-full bg-[#FAF7F2] border border-[#EDE4D5] rounded-xl overflow-hidden p-6 sm:p-10 shadow-sm flex items-center justify-center">
+
+          <!-- Exact Aspect Ratio Wrapper Locking Dots to Map Geometry -->
+          <div class="relative w-full aspect-[786/360.5] max-w-full">
+            <img src="assets/icons/indonesia-provinces.svg"
+                 alt="Peta Kepulauan Indonesia"
+                 class="w-full h-full object-contain pointer-events-none select-none filter drop-shadow-sm">
+
+            <!-- Radar Hotspots (Pins Tepat di Daratan Pulau) -->
+            <div class="radar-dot" data-area="sumatera" style="left:17%;top:43%;" aria-label="Sumatera">
+              <span class="ping"></span><span class="core"></span>
+            </div>
+            <div class="radar-dot" data-area="jawa" style="left:33%;top:76%;" aria-label="Jawa">
+              <span class="ping"></span><span class="core"></span>
+            </div>
+            <div class="radar-dot" data-area="bali_nt" style="left:49%;top:79%;" aria-label="Bali & Nusa Tenggara">
+              <span class="ping"></span><span class="core"></span>
+            </div>
+            <div class="radar-dot" data-area="kalimantan" style="left:43%;top:42%;" aria-label="Kalimantan">
+              <span class="ping"></span><span class="core"></span>
+            </div>
+            <div class="radar-dot" data-area="sulawesi" style="left:58%;top:51%;" aria-label="Sulawesi">
+              <span class="ping"></span><span class="core"></span>
+            </div>
+            <div class="radar-dot" data-area="maluku_papua" style="left:85%;top:58%;" aria-label="Maluku & Papua">
+              <span class="ping"></span><span class="core"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick-access legend (Balanced 6-column Grid) -->
+        <div class="pt-2">
+          <p class="text-xs font-bold uppercase tracking-wider text-[#6B5E55] mb-3">Pilih Cepat Zona Kepulauan:</p>
+          <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-2 w-full">
+            <button class="area-tab text-xs font-semibold px-3 py-2.5 border border-[#EDE4D5] bg-[#FAF7F2] rounded-lg hover:border-[#C5A059] text-center" data-area="sumatera">01 Sumatera</button>
+            <button class="area-tab text-xs font-semibold px-3 py-2.5 border border-[#EDE4D5] bg-[#FAF7F2] rounded-lg hover:border-[#C5A059] text-center" data-area="jawa">02 Jawa</button>
+            <button class="area-tab text-xs font-semibold px-3 py-2.5 border border-[#EDE4D5] bg-[#FAF7F2] rounded-lg hover:border-[#C5A059] text-center" data-area="bali_nt">03 Bali & NT</button>
+            <button class="area-tab text-xs font-semibold px-3 py-2.5 border border-[#EDE4D5] bg-[#FAF7F2] rounded-lg hover:border-[#C5A059] text-center" data-area="kalimantan">04 Kalimantan</button>
+            <button class="area-tab text-xs font-semibold px-3 py-2.5 border border-[#EDE4D5] bg-[#FAF7F2] rounded-lg hover:border-[#C5A059] text-center" data-area="sulawesi">05 Sulawesi</button>
+            <button class="area-tab text-xs font-semibold px-3 py-2.5 border border-[#EDE4D5] bg-[#FAF7F2] rounded-lg hover:border-[#C5A059] text-center" data-area="maluku_papua">06 Papua</button>
+          </div>
+        </div>
+
+        <!-- Extra Balanced Content below Quick Select (Foto 5 Fix: Seimbang & Tidak Kosong) -->
+        <div id="area-extra-content" class="mt-2 flex flex-col gap-3.5">
+          <!-- 3 Quick Metrics -->
+          <div class="grid grid-cols-3 gap-2.5 sm:gap-3">
+            <div class="p-3.5 sm:p-4 rounded-xl border border-[#EDE4D5]/60 bg-[#FAF7F2] shadow-xs text-center flex flex-col items-center justify-center">
+              <span class="text-[11px] font-sans uppercase font-bold text-[#9A6F00] tracking-wider mb-1">Cagar Budaya</span>
+              <strong id="extra-metric-cagar" class="font-display text-lg sm:text-xl text-[#2B231D] font-bold">420+ Situs</strong>
+              <span class="text-[10px] text-[#6B5E55]/75 font-sans mt-0.5">Terdaftar Nasional</span>
+            </div>
+            <div class="p-3.5 sm:p-4 rounded-xl border border-[#EDE4D5]/60 bg-[#FAF7F2] shadow-xs text-center flex flex-col items-center justify-center">
+              <span class="text-[11px] font-sans uppercase font-bold text-[#9A6F00] tracking-wider mb-1">Sentra Pengrajin</span>
+              <strong id="extra-metric-artisans" class="font-display text-lg sm:text-xl text-[#2B231D] font-bold">3.850+ UMKM</strong>
+              <span class="text-[10px] text-[#6B5E55]/75 font-sans mt-0.5">Mitra Binaan Nusava</span>
+            </div>
+            <div class="p-3.5 sm:p-4 rounded-xl border border-[#EDE4D5]/60 bg-[#FAF7F2] shadow-xs text-center flex flex-col items-center justify-center">
+              <span class="text-[11px] font-sans uppercase font-bold text-[#9A6F00] tracking-wider mb-1">Karya Pusaka</span>
+              <strong id="extra-metric-unesco" class="font-display text-lg sm:text-xl text-[#2B231D] font-bold">18 Warisan</strong>
+              <span class="text-[10px] text-[#6B5E55]/75 font-sans mt-0.5">Status UNESCO</span>
+            </div>
+          </div>
+
+          <!-- Cultural Wisdom Box -->
+          <div class="p-4 sm:p-5 rounded-xl border border-[#EDE4D5]/70 bg-gradient-to-br from-[#FAF7F2] to-[#F5EFE6] shadow-xs relative overflow-hidden">
+            <div class="flex items-start gap-3 relative z-10">
+              <span class="text-[#C5A059] text-2xl font-garamond italic font-bold leading-none select-none">“</span>
+              <div class="flex-1">
+                <p class="text-[10px] font-sans font-bold tracking-[0.2em] uppercase text-[#9A6F00] mb-1">Filosofi Kearifan Budaya Wilayah</p>
+                <p id="extra-cultural-quote" class="font-garamond italic text-sm sm:text-base text-[#2B231D] leading-relaxed">
+                  "Memayu hayuning bawana — keselarasan cipta, rasa, dan karsa yang terwujud dalam liukan canting batik tulis dan tatahan sakral keris pusaka."
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Explore Tip -->
+          <div class="flex items-center gap-2.5 px-4 py-2.5 rounded-lg border border-[#EDE4D5]/50 bg-[#FAF7F2]/80 text-xs text-[#6B5E55]">
+            <span class="w-2 h-2 rounded-full bg-[#C5A059] animate-pulse flex-shrink-0"></span>
+            <span class="font-sans leading-tight"><strong>Eksplorasi Aktif:</strong> Pilih zona pulau untuk melihat profil kurasi, ragam pusaka, dan kisah perajin lokal di panel samping.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info panel (5 cols — Detail Luas & Kaya) -->
+      <div class="lg:col-span-5">
+        <div id="area-info-panel" class="area-panel bg-[#FAF7F2] border border-[#EDE4D5] p-8 sm:p-10 rounded-sm shadow-md">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================================
+     N° 02 — RAGAM BUDAYA (Editorial Asymmetric Grid)
+     ========================================================================= -->
+<section id="ragam-budaya" class="bg-[#F5EFE6] pt-24 sm:pt-28 pb-16 sm:pb-24">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+    <!-- Chapter header -->
+    <div class="flex items-start gap-6 sm:gap-10 mb-12 sm:mb-16">
+      <span class="text-chapter leading-none select-none flex-shrink-0">02</span>
+      <div class="pt-2">
+        <span class="section-index-badge reveal">N° 02 · RAGAM WARISAN</span>
+        <h2 class="reveal delay-100 font-display font-bold text-3xl sm:text-5xl text-[#2B231D] leading-tight">
+          Ragam Budaya<br><span class="text-[#C5A059] italic font-normal font-garamond">yang Melampaui Waktu</span>
+        </h2>
+      </div>
+    </div>
+
+    <!-- Editorial asymmetric: sticky left text + balanced 2x2 grid -->
+    <div class="heritage-story-grid items-stretch">
+
+      <!-- Left Column: Story + Dynamic Arch Card (Flush to Bottom) -->
+      <div class="heritage-story-left">
+        <p class="reveal font-sans text-[#6B5E55] leading-relaxed mb-6 text-sm sm:text-base">
+          Setiap jengkal Nusantara punya cerita dan keindahan tersendiri: dari liukan canting batik tulis, megahnya rumah panggung adat, hingga tabuhan ritmis tarian sakral yang menyatukan rasa kita.
+        </p>
+        <div class="reveal delay-100 hairline mb-6"></div>
+        <p class="reveal delay-200 font-garamond font-light italic text-2xl text-[#2B231D] leading-relaxed">
+          "Budaya bukan sekadar warisan masa lalu, tapi jiwa yang terus mengalir dan menghidupi masa depan."
+        </p>
+        <p class="reveal delay-300 text-[11px] font-sans tracking-[0.15em] uppercase text-[#6B5E55] mt-3 mb-6">· Semangat Nusava</p>
+
+        <!-- Tari Kecak Arch Heritage Showcase (Kubah / Lengkungan Animasi - Auto Flex Height) -->
+        <div class="arch-card-featured-wrap relative flex-1 flex flex-col min-h-[380px] lg:min-h-0 reveal delay-400 mt-8">
+          <!-- Ambient Glow behind Arch -->
+          <div class="absolute -inset-2 bg-gradient-to-t from-[#C5A059]/20 via-transparent to-transparent rounded-t-[140px] blur-lg pointer-events-none -z-10"></div>
+          
+          <div class="arch-card-featured arch-heritage-showcase relative group cursor-pointer w-full">
+            <!-- Animated Gold Aura Ring -->
+            <div class="arch-gold-aura" aria-hidden="true"></div>
+
+            <img src="assets/images/content/wilayah-bali-kecak.jpg"
+                 alt="Tari Tradisi Bali (Kecak & Barong)">
+            
+            <!-- Floating UNESCO Badge with Pulsing Radar -->
+            <div class="absolute top-4 left-4 z-10 flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#241B16]/85 backdrop-blur-md border border-[#C5A059]/40 text-[#F7F2EA] text-[10px] font-sans font-bold tracking-wider uppercase shadow-md">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#C5A059] opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-[#C5A059]"></span>
+              </span>
+              <span>UNESCO · 2015</span>
+            </div>
+
+            <!-- Bottom Content Vignette -->
+            <div class="relative z-10 bg-gradient-to-t from-[#241B16] via-[#241B16]/75 to-transparent p-5 sm:p-6 transition-all duration-300">
+              <div class="flex items-center gap-1.5 mb-1 text-[11px] text-[#C5A059] font-sans font-semibold tracking-wider uppercase">
+                <span>📍 Uluwatu, Badung, Bali</span>
+              </div>
+              <h3 class="text-[#F7F2EA] text-base sm:text-lg font-display font-bold tracking-wide mb-1 leading-snug">
+                Tari Tradisi Bali (Kecak)
+              </h3>
+              <p class="text-[12px] text-white/80 font-sans leading-relaxed line-clamp-2">
+                Harmoni koor vokal ritmis sakral puluhan penari di tebing karang berlatar matahari terbenam samudra.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: 2x2 Clean Editorial Card Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+
+        <!-- Culture card 1 : Batik Giriloyo -->
+        <article class="culture-card reveal-popup delay-100 group h-[380px] sm:h-[400px]">
+          <img src="assets/images/content/produk-batik-giriloyo.jpg" alt="Batik Tulis Jawa" class="culture-card-img">
+          
+          <!-- Top Floating Tag -->
+          <div class="absolute top-3.5 left-3.5 z-10">
+            <span class="px-2.5 py-1 rounded-full bg-[#241B16]/80 backdrop-blur-md text-[10px] font-sans font-bold tracking-wider text-[#C5A059] uppercase border border-[#C5A059]/30">
+              Warisan UNESCO (2009)
+            </span>
+          </div>
+
+          <!-- Bottom Editorial Content -->
+          <div class="culture-card-overlay">
+            <span class="text-[10px] font-sans uppercase tracking-widest text-[#C5A059] font-bold block mb-1">
+              Bantul, D.I. Yogyakarta · Jawa
+            </span>
+            <h3 class="text-white font-display text-lg sm:text-xl font-bold leading-snug group-hover:text-[#E5C788] transition-colors">
+              Wastra & Batik Tulis Nitik
+            </h3>
+            <div class="culture-gold-accent my-2"></div>
+            <p class="culture-card-desc text-xs text-white/85 font-sans leading-relaxed">
+              Mahakarya ribuan titik lilin malam canting cawang alami yang diwariskan turun-temurun oleh para maestro Giriloyo.
+            </p>
+          </div>
+        </article>
+
+        <!-- Culture card 2 : Tenun Sumba -->
+        <article class="culture-card reveal-popup delay-200 group h-[380px] sm:h-[400px]">
+          <img src="assets/images/content/produk-tenun-sumba.jpg" alt="Tenun Ikat Sumba" class="culture-card-img">
+          
+          <!-- Top Floating Tag -->
+          <div class="absolute top-3.5 left-3.5 z-10">
+            <span class="px-2.5 py-1 rounded-full bg-[#241B16]/80 backdrop-blur-md text-[10px] font-sans font-bold tracking-wider text-[#C5A059] uppercase border border-[#C5A059]/30">
+              WBTb No. 201400144
+            </span>
+          </div>
+
+          <!-- Bottom Editorial Content -->
+          <div class="culture-card-overlay">
+            <span class="text-[10px] font-sans uppercase tracking-widest text-[#C5A059] font-bold block mb-1">
+              Waingapu, Sumba Timur · NTT
+            </span>
+            <h3 class="text-white font-display text-lg sm:text-xl font-bold leading-snug group-hover:text-[#E5C788] transition-colors">
+              Tenun Ikat Gedogan Hinggi
+            </h3>
+            <div class="culture-gold-accent my-2"></div>
+            <p class="culture-card-desc text-xs text-white/85 font-sans leading-relaxed">
+              Kain sakral berpewarna alami akar mengkudu dan daun nila dengan motif fauna simbol keberanian leluhur.
+            </p>
+          </div>
+        </article>
+
+        <!-- Culture card 3 : Tongkonan Toraja -->
+        <article class="culture-card reveal-popup delay-300 group h-[380px] sm:h-[400px]">
+          <img src="assets/images/content/wilayah-sulawesi-tongkonan.jpg" alt="Arsitektur Rumah Adat Tongkonan" class="culture-card-img">
+          
+          <!-- Top Floating Tag -->
+          <div class="absolute top-3.5 left-3.5 z-10">
+            <span class="px-2.5 py-1 rounded-full bg-[#241B16]/80 backdrop-blur-md text-[10px] font-sans font-bold tracking-wider text-[#C5A059] uppercase border border-[#C5A059]/30">
+              Tentative UNESCO · WBTb
+            </span>
+          </div>
+
+          <!-- Bottom Editorial Content -->
+          <div class="culture-card-overlay">
+            <span class="text-[10px] font-sans uppercase tracking-widest text-[#C5A059] font-bold block mb-1">
+              Kete Kesu, Tana Toraja · Sulawesi
+            </span>
+            <h3 class="text-white font-display text-lg sm:text-xl font-bold leading-snug group-hover:text-[#E5C788] transition-colors">
+              Arsitektur Adat Tongkonan
+            </h3>
+            <div class="culture-gold-accent my-2"></div>
+            <p class="culture-card-desc text-xs text-white/85 font-sans leading-relaxed">
+              Rumah adat beratap lengkung perahu menghadap utara, sarat ukiran geometris pa'ssura filosofi kehidupan.
+            </p>
+          </div>
+        </article>
+
+        <!-- Culture card 4 : Dayak Talawang -->
+        <article class="culture-card reveal-popup delay-400 group h-[380px] sm:h-[400px]">
+          <img src="assets/images/content/wilayah-kalimantan-talawang.jpg" alt="Perisai Talawang & Ukiran Dayak" class="culture-card-img">
+          
+          <!-- Top Floating Tag -->
+          <div class="absolute top-3.5 left-3.5 z-10">
+            <span class="px-2.5 py-1 rounded-full bg-[#241B16]/80 backdrop-blur-md text-[10px] font-sans font-bold tracking-wider text-[#C5A059] uppercase border border-[#C5A059]/30">
+              WBTb No. 201700543
+            </span>
+          </div>
+
+          <!-- Bottom Editorial Content -->
+          <div class="culture-card-overlay">
+            <span class="text-[10px] font-sans uppercase tracking-widest text-[#C5A059] font-bold block mb-1">
+              Hulu Sungai Mahakam · Kalimantan
+            </span>
+            <h3 class="text-white font-display text-lg sm:text-xl font-bold leading-snug group-hover:text-[#E5C788] transition-colors">
+              Seni Ukir Perisai Talawang
+            </h3>
+            <div class="culture-gold-accent my-2"></div>
+            <p class="culture-card-desc text-xs text-white/85 font-sans leading-relaxed">
+              Pahat kayu ulin bertatahkan motif flora sulur dan satwa mitologi penangkal mara bahaya ksatria Dayak.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================
+     CURVED SECTION TRANSITION : Ragam Budaya into Produk Nusani (Lengkung Klasik Beranimasi)
+     ========================================================================= -->
+<div class="curved-divider-down relative z-10 -mb-px pointer-events-none" aria-hidden="true">
+  <svg class="w-full fill-[#241B16] block" viewBox="0 0 1440 96" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="goldCurveGlow1" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#C5A059" stop-opacity="0" />
+        <stop offset="30%" stop-color="#C5A059" stop-opacity="0.3" />
+        <stop offset="50%" stop-color="#E5C788" stop-opacity="0.95" />
+        <stop offset="70%" stop-color="#C5A059" stop-opacity="0.3" />
+        <stop offset="100%" stop-color="#C5A059" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+    <path d="M0,0 C480,96 960,96 1440,0 L1440,96 L0,96 Z"></path>
+    <!-- Animated Golden Arch Contour Wave -->
+    <path d="M0,0 C480,96 960,96 1440,0" fill="none" stroke="url(#goldCurveGlow1)" stroke-width="2.5" class="curve-gold-stroke"></path>
+  </svg>
+</div>
+
+<!-- =========================================================================
+     PILAR WARISAN (4 Pillars — Dark Section with Interactive Scroll-Morphing Curve)
+     ========================================================================= -->
+<section id="produk" class="curved-dark-section bg-[#241B16] py-16 sm:py-24 relative">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+    <!-- Header -->
+    <div class="text-center mb-14 sm:mb-18">
+      <span class="section-index-badge text-center reveal">PILAR WARISAN · EMPAT DIMENSI</span>
+      <h2 class="reveal delay-100 font-display font-bold text-3xl sm:text-4xl text-[#F7F2EA] leading-tight">
+        Empat Pilar Warisan<br><span class="text-[#C5A059]">yang Kami Dampingi</span>
+      </h2>
+    </div>
+
+    <!-- 4-pilar editorial grid with luxury rounded cards (Bebas Garis Pemotong — Foto 1 Fix) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <!-- Pilar 1: Seni Pengrajin -->
+      <div class="pilar-card reveal-popup p-8 lg:p-10 flex flex-col gap-5 rounded-2xl bg-[#2D221C] border border-[#C5A059]/20 hover:border-[#C5A059]/50 transition-all shadow-md">
+        <div class="w-12 h-12 rounded-full border border-[#C5A059]/40 flex items-center justify-center text-[#C5A059]">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        </div>
+        <div>
+          <p class="text-[11px] font-sans font-bold tracking-[0.18em] uppercase text-[#C5A059]/80 mb-2">01</p>
+          <h3 class="font-display font-bold text-xl text-[#F7F2EA] mb-3">Seni Pengrajin</h3>
+          <p class="font-sans text-sm text-[#F7F2EA]/85 leading-relaxed">Ukiran kayu, perisai adat, dan kerajinan tangan otentik yang dipahat manual oleh para maestro desa.</p>
+        </div>
+        <a href="#pasar" class="pilar-link mt-auto text-[11px] font-sans font-bold tracking-[0.16em] uppercase text-[#C5A059] flex items-center gap-2 hover:gap-3 transition-all duration-300">Jelajahi Kriya →</a>
+      </div>
+
+      <!-- Pilar 2: Pakaian & Wastra -->
+      <div class="pilar-card reveal-popup delay-100 p-8 lg:p-10 flex flex-col gap-5 rounded-2xl bg-[#2D221C] border border-[#C5A059]/20 hover:border-[#C5A059]/50 transition-all shadow-md">
+        <div class="w-12 h-12 rounded-full border border-[#C5A059]/40 flex items-center justify-center text-[#C5A059]">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+        <div>
+          <p class="text-[11px] font-sans font-bold tracking-[0.18em] uppercase text-[#C5A059]/80 mb-2">02</p>
+          <h3 class="font-display font-bold text-xl text-[#F7F2EA] mb-3">Pakaian & Wastra</h3>
+          <p class="font-sans text-sm text-[#F7F2EA]/85 leading-relaxed">Dari batik tulis canting pewarna alami hingga tenun ikat gedogan Sumba yang dikerjakan berbulan-bulan dengan cinta.</p>
+        </div>
+        <a href="#pasar" class="pilar-link mt-auto text-[11px] font-sans font-bold tracking-[0.16em] uppercase text-[#C5A059] flex items-center gap-2 hover:gap-3 transition-all duration-300">Jelajahi Wastra →</a>
+      </div>
+
+      <!-- Pilar 3: Aksesoris Tradisi -->
+      <div class="pilar-card reveal-popup delay-200 p-8 lg:p-10 flex flex-col gap-5 rounded-2xl bg-[#2D221C] border border-[#C5A059]/20 hover:border-[#C5A059]/50 transition-all shadow-md">
+        <div class="w-12 h-12 rounded-full border border-[#C5A059]/40 flex items-center justify-center text-[#C5A059]">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+        </div>
+        <div>
+          <p class="text-[11px] font-sans font-bold tracking-[0.18em] uppercase text-[#C5A059]/80 mb-2">03</p>
+          <h3 class="font-display font-bold text-xl text-[#F7F2EA] mb-3">Aksesoris Tradisi</h3>
+          <p class="font-sans text-sm text-[#F7F2EA]/85 leading-relaxed">Sentuhan perhiasan perak filigri Celuk Bali dan rajutan tas noken Papua yang ramah lingkungan dan sarat doa leluhur.</p>
+        </div>
+        <a href="#pasar" class="pilar-link mt-auto text-[11px] font-sans font-bold tracking-[0.16em] uppercase text-[#C5A059] flex items-center gap-2 hover:gap-3 transition-all duration-300">Jelajahi Aksesori →</a>
+      </div>
+
+      <!-- Pilar 4: Alat Musik -->
+      <div class="pilar-card reveal-popup delay-300 p-8 lg:p-10 flex flex-col gap-5 rounded-2xl bg-[#2D221C] border border-[#C5A059]/20 hover:border-[#C5A059]/50 transition-all shadow-md">
+        <div class="w-12 h-12 rounded-full border border-[#C5A059]/40 flex items-center justify-center text-[#C5A059]">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+        </div>
+        <div>
+          <p class="text-[11px] font-sans font-bold tracking-[0.18em] uppercase text-[#C5A059]/80 mb-2">04</p>
+          <h3 class="font-display font-bold text-xl text-[#F7F2EA] mb-3">Alat Musik</h3>
+          <p class="font-sans text-sm text-[#F7F2EA]/85 leading-relaxed">Alunan jernih dawai Sasando daun lontar Rote dan tabuhan tifa yang membawa kedamaian kepulauan langsung ke ruanganmu.</p>
+        </div>
+        <a href="#pasar" class="pilar-link mt-auto text-[11px] font-sans font-bold tracking-[0.16em] uppercase text-[#C5A059] flex items-center gap-2 hover:gap-3 transition-all duration-300">Jelajahi Musik →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================================
+     CURVED SECTION TRANSITION : Produk Nusani into AI Assistant (Lengkung Klasik Beranimasi)
+     ========================================================================= -->
+<div class="curved-divider-up relative z-10 -mt-px pointer-events-none" aria-hidden="true">
+  <svg class="w-full fill-[#241B16] block" viewBox="0 0 1440 96" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="goldCurveGlow2" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#C5A059" stop-opacity="0" />
+        <stop offset="30%" stop-color="#C5A059" stop-opacity="0.3" />
+        <stop offset="50%" stop-color="#E5C788" stop-opacity="0.95" />
+        <stop offset="70%" stop-color="#C5A059" stop-opacity="0.3" />
+        <stop offset="100%" stop-color="#C5A059" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+    <path d="M0,96 C480,0 960,0 1440,96 L1440,0 L0,0 Z"></path>
+    <!-- Animated Golden Arch Contour Wave -->
+    <path d="M0,96 C480,0 960,0 1440,96" fill="none" stroke="url(#goldCurveGlow2)" stroke-width="2.5" class="curve-gold-stroke"></path>
+  </svg>
+</div>
+
+<!-- =========================================================================
+     N° 03 — NUSANTARA AI ASSISTANT (Konsultasi & Kustomisasi Kriya)
+     ========================================================================= -->
+<section id="ai-kustomisasi" class="bg-[#F5EFE6] py-20 sm:py-28 relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+
+    <!-- Chapter Header -->
+    <div class="flex items-start gap-6 sm:gap-10 mb-12 sm:mb-16">
+      <span class="text-chapter leading-none select-none flex-shrink-0">03</span>
+      <div class="pt-2">
+        <span class="section-index-badge reveal">N° 03 · KONSULTASI AI BUDAYA</span>
+        <h2 class="reveal delay-100 font-display font-bold text-3xl sm:text-5xl text-[#2B231D] leading-tight">
+          Tanya Ahli & Kustomisasi Pusaka<br>
+          <span class="text-[#C5A059] italic font-normal font-garamond">(AI-Powered Consultation)</span>
+        </h2>
+        <p class="reveal delay-200 mt-4 text-[#6B5E55] text-base max-w-2xl leading-relaxed">
+          Punya ide karya budaya impian? Ceritakan acara atau gaya yang kamu mau. AI Kurator Nusava bakal carikan motif tradisional yang pas, hitung perkiraan waktu jadinya, dan langsung hubungkan kamu ke pengrajin daerah terpercaya.
+        </p>
+      </div>
+    </div>
+
+    <!-- 2-Column Luxury Editorial Grid -->
+    <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+
+      <!-- Left Column: Chat / Prompt Input Panel -->
+      <div class="lg:col-span-7 bg-[#FAF7F2] border border-[#EDE4D5] p-6 sm:p-8 rounded-sm shadow-sm reveal">
+        
+        <!-- Header & Status badge -->
+        <div class="flex items-center justify-between pb-5 border-b border-[#EDE4D5] mb-6">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-[#EDE4D5] border border-[#C5A059]/40 flex items-center justify-center text-[#C5A059]">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693l-1.57-.393m15.6 0l1.4 3.5a2.25 2.25 0 01-2.09 3.087H4.89a2.25 2.25 0 01-2.09-3.087l1.4-3.5"/></svg>
+            </div>
+            <div>
+              <h3 class="font-display font-semibold text-base sm:text-lg text-[#2B231D]">Kurator Digital Pusaka</h3>
+              <p class="text-xs text-[#6B5E55]">Siap bantu wujudkan kriya & wastra impianmu</p>
+            </div>
+          </div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-[#EDE4D5] text-[#6B5E55] border border-[#C5A059]/30">
+            <span class="w-2 h-2 rounded-full bg-[#C5A059] animate-pulse"></span> Online
+          </span>
+        </div>
+
+        <!-- Quick Prompt Chips -->
+        <div class="mb-5">
+          <p class="text-[11px] font-sans font-bold tracking-[0.16em] uppercase text-[#6B5E55] mb-2.5">Contoh Permintaan yang Bisa Dicoba:</p>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" class="ai-chip" data-prompt="Saya ingin pesan kain tenun dengan nuansa warna biru laut khas Bali untuk acara pernikahan modern">
+              <span>🌊</span> Tenun Biru Laut Bali (Pernikahan)
+            </button>
+            <button type="button" class="ai-chip" data-prompt="Rekomendasikan batik tulis corak kontemporer nuansa tanah Jawa yang simpel dan elegan untuk busana kerja">
+              <span>🍂</span> Batik Tulis Nuansa Bumi (Kerja)
+            </button>
+            <button type="button" class="ai-chip" data-prompt="Saya mencari hiasan ukiran kayu dinding bermotif tameng Dayak Kalimantan untuk dekorasi ruang tamu minimalis">
+              <span>🪵</span> Hiasan Dinding Ukir Dayak (Ruang Tamu)
+            </button>
+            <button type="button" class="ai-chip" data-prompt="Pemesanan keris pusaka ornamen luk 7 tatahan emas untuk cinderamata eksklusif">
+              <span>🗡️</span> Keris Pusaka Luk 7 Emas (Koleksi)
+            </button>
+          </div>
+        </div>
+
+        <!-- Input Box -->
+        <div class="relative mb-4">
+          <label for="ai-prompt-input" class="sr-only">Tulis kustomisasi karya budaya yang Anda inginkan</label>
+          <textarea
+            id="ai-prompt-input"
+            rows="4"
+            class="w-full bg-[#F5EFE6]/70 border border-[#EDE4D5] focus:border-[#C5A059] focus:bg-[#FAF7F2] focus:outline-none p-4 rounded-sm text-sm text-[#2B231D] placeholder-[#6B5E55]/70 resize-none transition-all duration-200"
+            placeholder="Ceritakan ide karyamu di sini (misal: Mau pesan kain tenun biru laut khas Bali buat kado pernikahan teman)..."
+          ></textarea>
+          <div class="flex items-center justify-between mt-2 px-1 text-xs text-[#6B5E55]">
+            <span id="ai-char-counter">0 / 300 karakter</span>
+            <button type="button" id="ai-clear-btn" class="hover:text-[#2B231D] underline underline-offset-2 transition-colors">Bersihkan Teks</button>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 border-t border-[#EDE4D5]">
+          <p class="text-[11px] text-[#6B5E55] flex items-center gap-1.5">
+            <svg class="w-4 h-4 text-[#C5A059] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Analisis budaya berbasis kearifan lokal 38 provinsi
+          </p>
+          <button
+            type="button"
+            id="ai-submit-btn"
+            class="inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-[#241B16] text-[#F7F2EA] hover:bg-[#C5A059] hover:text-white text-xs font-sans font-bold tracking-[0.18em] uppercase transition-all duration-300 shadow-md active:scale-95"
+          >
+            <span>Kirim ke AI Pusaka</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Right Column: AI Output Response Container -->
+      <div class="lg:col-span-5 bg-[#FAF7F2] border border-[#EDE4D5] p-6 sm:p-8 rounded-sm shadow-sm reveal delay-100 flex flex-col justify-between min-h-[460px] relative">
+        
+        <!-- State 1: Placeholder / Empty state -->
+        <div id="ai-placeholder-state" class="flex flex-col items-center justify-center text-center my-auto py-10">
+          <div class="w-16 h-16 rounded-full bg-[#EDE4D5] border border-[#C5A059]/30 flex items-center justify-center text-[#C5A059] mb-5">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          </div>
+          <h4 class="font-display font-semibold text-lg text-[#2B231D] mb-2">Konsultasi Kustomisasi Kriya</h4>
+          <p class="text-sm text-[#6B5E55] max-w-sm leading-relaxed mb-6">
+            Pilih contoh inspirasi cepat di samping atau ketik kebutuhan khususmu untuk mendapatkan analisis motif, estimasi pengerjaan, dan akses langsung ke pengrajin.
+          </p>
+          <div class="flex items-center gap-2 text-xs font-semibold text-[#6B5E55] uppercase tracking-wider">
+            <span>✦ Terhubung ke Jaringan Perajin Terverifikasi</span>
+          </div>
+        </div>
+
+        <!-- State 2: Simulated AI Typing state -->
+        <div id="ai-typing-state" class="hidden flex-col items-center justify-center text-center my-auto py-10">
+          <div class="w-14 h-14 rounded-full bg-[#EDE4D5] border border-[#C5A059]/40 flex items-center justify-center mb-6">
+            <div class="flex items-center gap-1.5">
+              <span class="ai-pulse-dot"></span>
+              <span class="ai-pulse-dot"></span>
+              <span class="ai-pulse-dot"></span>
+            </div>
+          </div>
+          <p class="text-xs font-sans font-bold tracking-[0.18em] uppercase text-[#C5A059] mb-2">Simulasi Kecerdasan Budaya</p>
+          <h4 class="font-display font-semibold text-lg text-[#2B231D] mb-2">AI sedang merancang rekomendasi budaya dan menghitung estimasi...</h4>
+          <p class="text-xs text-[#6B5E55] max-w-xs leading-relaxed">
+            Menyelaraskan filosofi motif, pewarna alami lokal, durasi pembuatan, dan profil perajin...
+          </p>
+        </div>
+
+        <!-- State 3: Structured AI Response Output -->
+        <div id="ai-result-state" class="hidden flex-col h-full">
+          <!-- Result Card Header -->
+          <div class="flex items-center justify-between pb-4 border-b border-[#EDE4D5] mb-5">
+            <div>
+              <span class="text-[10px] font-sans font-bold tracking-[0.2em] uppercase text-[#C5A059] block">Hasil Analisis AI Kurator</span>
+              <h4 id="ai-result-title" class="font-display font-bold text-lg text-[#2B231D]">Tenun Ikat Endek Mastuli Bali</h4>
+            </div>
+            <span id="ai-result-category" class="px-2.5 py-1 text-[11px] font-semibold bg-[#EDE4D5] text-[#6B5E55] rounded-sm">Wastra Kustom</span>
+          </div>
+
+          <!-- Recommendation Details -->
+          <div class="space-y-4 text-sm text-[#2B231D] mb-6 flex-1">
+            <div class="bg-[#F5EFE6]/80 p-3.5 rounded border border-[#EDE4D5]">
+              <p class="text-[11px] font-sans font-bold tracking-wider uppercase text-[#6B5E55] mb-1">1. Rekomendasi Teknik & Motif</p>
+              <p id="ai-result-technique" class="text-xs text-[#2B231D] leading-relaxed">Tenun ATBM dengan pewarna alami daun tarum (indigo). Motif ombak Segara dipadukan ornamen geometris modern.</p>
+            </div>
+
+            <div class="bg-[#F5EFE6]/80 p-3.5 rounded border border-[#EDE4D5]">
+              <p class="text-[11px] font-sans font-bold tracking-wider uppercase text-[#6B5E55] mb-1">Filosofi & Makna Simbolis</p>
+              <p id="ai-result-philosophy" class="text-xs text-[#6B5E55] leading-relaxed">Melambangkan keteguhan cinta yang luas bak samudera dan keseimbangan hidup keluarga baru.</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div class="bg-[#EDE4D5]/60 p-3 rounded border border-[#EDE4D5]">
+                <p class="text-[10px] font-sans font-bold tracking-wider uppercase text-[#6B5E55]">2. Estimasi Waktu Pengerjaan</p>
+                <p id="ai-result-timeline" class="font-bold text-xs text-[#2B231D] mt-0.5">3 – 4 Minggu Kerja</p>
+              </div>
+              <div class="bg-[#EDE4D5]/60 p-3 rounded border border-[#EDE4D5]">
+                <p class="text-[10px] font-sans font-bold tracking-wider uppercase text-[#6B5E55]">Kisaran Biaya Perkiraan</p>
+                <p id="ai-result-price" class="font-bold text-xs text-[#2B231D] mt-0.5">Rp 2.400.000 – Rp 3.600.000</p>
+              </div>
+            </div>
+
+            <div class="text-xs text-[#6B5E55] flex items-center gap-1.5 pt-1">
+              <span>📍 <strong>Sentra Pengrajin:</strong></span>
+              <span id="ai-result-artisan" class="text-[#2B231D] font-medium">Komunitas Tenun Sidemen, Karangasem, Bali</span>
+            </div>
+
+            <div class="p-2.5 bg-[#FAF7F2] border border-[#EDE4D5] rounded text-[11px] text-[#6B5E55] flex items-start gap-1.5 mt-2">
+              <span class="text-[#C5A059] flex-shrink-0">🏛️</span>
+              <div><strong class="text-[#2B231D]">Rujukan Budaya:</strong> <span id="ai-result-source">Indikasi Geografis DJKI Kemenkumham RI (ID G 000000094)</span></div>
+            </div>
+          </div>
+
+          <!-- Real Action Buttons -->
+          <div class="pt-4 border-t border-[#EDE4D5] flex flex-col gap-2.5">
+            <a
+              id="ai-wa-btn"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-full py-3.5 px-4 bg-[#25D366] hover:bg-[#1EBE5D] text-white text-xs font-sans font-bold tracking-[0.14em] uppercase text-center rounded-sm transition-all duration-300 shadow-sm flex items-center justify-center gap-2"
+            >
+              <svg class="w-4 h-4 fill-white flex-shrink-0" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+              <span>Kirim Pesanan Kustom Ini ke WhatsApp Perajin</span>
+            </a>
+            <button
+              type="button"
+              id="ai-copy-btn"
+              class="w-full py-2.5 px-4 bg-transparent border border-[#2B231D]/30 hover:border-[#2B231D] text-[#2B231D] text-[11px] font-sans font-bold tracking-[0.16em] uppercase rounded-sm transition-all duration-200"
+            >
+              Salin Rincian Rekomendasi
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================================
+     N° 04 — AI HERITAGE MATCHMAKER (Kuis Pencocokan Pusaka 3 Langkah)
+     ========================================================================= -->
+<section id="ai-matchmaker" class="bg-[#FAF7F2] py-16 sm:py-24 relative overflow-hidden">
+  <div class="max-w-5xl mx-auto px-6 lg:px-12 relative z-10">
+
+    <!-- Chapter Header -->
+    <div class="flex items-start gap-6 sm:gap-10 mb-12 sm:mb-16">
+      <span class="text-chapter leading-none select-none flex-shrink-0">04</span>
+      <div class="pt-2">
+        <span class="section-index-badge reveal">N° 04 · TEMUKAN PUSAKA COCOK</span>
+        <h2 class="reveal delay-100 font-display font-bold text-3xl sm:text-5xl text-[#2B231D] leading-tight">
+          Temukan Pusaka Nusantara<br>
+          <span class="text-[#C5A059] italic font-normal font-garamond">yang Paling Pas untukmu</span>
+        </h2>
+        <p class="reveal delay-200 mt-4 text-[#6B5E55] text-base max-w-2xl leading-relaxed">
+          Cukup jawab 3 pertanyaan santai. AI Nusava bakal bantu carikan karya kriya dan wastra Nusantara yang paling cocok dengan selera serta suasana rumahmu.
+        </p>
+      </div>
+    </div>
+
+    <!-- Stepper Progress Bar -->
+    <div class="mb-10 max-w-2xl mx-auto">
+      <div class="flex items-center justify-between text-xs font-sans font-bold tracking-[0.14em] uppercase text-[#6B5E55] mb-3">
+        <span id="quiz-step-label">Langkah 1 dari 3: Gaya Estetika</span>
+        <span id="quiz-percent-label">33% Selesai</span>
+      </div>
+      <div class="quiz-progress-bar w-full">
+        <div id="quiz-progress-fill" class="quiz-progress-fill" style="width: 33.33%;"></div>
+      </div>
+    </div>
+
+    <!-- Quiz Wizard Card Container -->
+    <div class="bg-[#F5EFE6] border border-[#EDE4D5] p-6 sm:p-10 rounded-sm shadow-md">
+
+      <!-- STEP 1: Gaya Estetika -->
+      <div id="quiz-step-1" class="quiz-step">
+        <div class="mb-8 text-center sm:text-left">
+          <span class="text-[11px] font-sans font-bold tracking-[0.2em] uppercase text-[#C5A059]">Langkah 01</span>
+          <h3 class="font-display font-bold text-2xl text-[#2B231D] mt-1">Gaya Estetika Apa yang Paling Mewakili Dirimu?</h3>
+          <p class="text-sm text-[#6B5E55] mt-1">Pilih pendekatan visual yang paling kamu sukai.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-4 mb-8">
+          <!-- Option A -->
+          <div class="quiz-card selected" data-step="1" data-value="modern">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-2xl">🏛️</span>
+              <div class="w-5 h-5 rounded-full border-2 border-[#C5A059] quiz-radio-circle flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#241B16] quiz-radio-check"></span>
+              </div>
+            </div>
+            <h4 class="font-display font-bold text-base text-[#2B231D] mb-1">Modern Minimalis</h4>
+            <p class="text-xs text-[#6B5E55] leading-relaxed">Garis rapi, palet warna tenang, simpel tapi tetap berkelas dan sedap dipandang.</p>
+          </div>
+
+          <!-- Option B -->
+          <div class="quiz-card" data-step="1" data-value="etnik">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-2xl">🏺</span>
+              <div class="w-5 h-5 rounded-full border-2 border-stone-300 quiz-radio-circle flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#241B16] quiz-radio-check opacity-0 scale-50 transition-all"></span>
+              </div>
+            </div>
+            <h4 class="font-display font-bold text-base text-[#2B231D] mb-1">Etnik Tradisional</h4>
+            <p class="text-xs text-[#6B5E55] leading-relaxed">Penuh nuansa klasik, sarat cerita leluhur, serta ukiran yang megah dan berkarakter.</p>
+          </div>
+
+          <!-- Option C -->
+          <div class="quiz-card" data-step="1" data-value="bohemian">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-2xl">🌿</span>
+              <div class="w-5 h-5 rounded-full border-2 border-stone-300 quiz-radio-circle flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#241B16] quiz-radio-check opacity-0 scale-50 transition-all"></span>
+              </div>
+            </div>
+            <h4 class="font-display font-bold text-base text-[#2B231D] mb-1">Bohemian & Alami</h4>
+            <p class="text-xs text-[#6B5E55] leading-relaxed">Nuansa serat alam yang hangat, santai, ramah lingkungan, dan menenangkan jiwa.</p>
+          </div>
+        </div>
+
+        <div class="flex justify-end pt-4 border-t border-[#EDE4D5]">
+          <button type="button" class="quiz-btn-next inline-flex items-center gap-2 px-7 py-3.5 bg-[#241B16] text-[#F7F2EA] hover:bg-[#C5A059] hover:text-white text-xs font-sans font-bold tracking-[0.16em] uppercase transition-all duration-300">
+            <span>Lanjut ke Langkah 2</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Kebutuhan / Tujuan -->
+      <div id="quiz-step-2" class="quiz-step hidden">
+        <div class="mb-8 text-center sm:text-left">
+          <span class="text-[11px] font-sans font-bold tracking-[0.2em] uppercase text-[#C5A059]">Langkah 02</span>
+          <h3 class="font-display font-bold text-2xl text-[#2B231D] mt-1">Rencananya Karya Ini Ingin Kamu Pakai untuk Apa?</h3>
+          <p class="text-sm text-[#6B5E55] mt-1">Biar pilihannya pas sama kebutuhanmu sehari-hari.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-4 mb-8">
+          <!-- Option A -->
+          <div class="quiz-card selected" data-step="2" data-value="dekorasi">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-2xl">🖼️</span>
+              <div class="w-5 h-5 rounded-full border-2 border-[#C5A059] quiz-radio-circle flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#241B16] quiz-radio-check"></span>
+              </div>
+            </div>
+            <h4 class="font-display font-bold text-base text-[#2B231D] mb-1">Dekorasi Rumah / Ruangan</h4>
+            <p class="text-xs text-[#6B5E55] leading-relaxed">Pajangan indah yang bikin suasana ruang tamu atau kamar lebih hangat dan berkarakter.</p>
+          </div>
+
+          <!-- Option B -->
+          <div class="quiz-card" data-step="2" data-value="fashion">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-2xl">🧣</span>
+              <div class="w-5 h-5 rounded-full border-2 border-stone-300 quiz-radio-circle flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#241B16] quiz-radio-check opacity-0 scale-50 transition-all"></span>
+              </div>
+            </div>
+            <h4 class="font-display font-bold text-base text-[#2B231D] mb-1">Fashion & Gaya Harian</h4>
+            <p class="text-xs text-[#6B5E55] leading-relaxed">Kain atau pelengkap gaya yang nyaman dipakai jalan-jalan maupun acara resmi.</p>
+          </div>
+
+          <!-- Option C -->
+          <div class="quiz-card" data-step="2" data-value="koleksi">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-2xl">👑</span>
+              <div class="w-5 h-5 rounded-full border-2 border-stone-300 quiz-radio-circle flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#241B16] quiz-radio-check opacity-0 scale-50 transition-all"></span>
+              </div>
+            </div>
+            <h4 class="font-display font-bold text-base text-[#2B231D] mb-1">Hadiah & Koleksi Spesial</h4>
+            <p class="text-xs text-[#6B5E55] leading-relaxed">Karya bernilai seni tinggi yang cocok jadi kado berkesan atau koleksi pribadi.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-[#EDE4D5]">
+          <button type="button" class="quiz-btn-prev inline-flex items-center gap-2 px-5 py-3 border border-[#2B231D]/30 hover:border-[#2B231D] text-xs font-sans font-bold tracking-[0.14em] uppercase text-[#2B231D] transition-colors">
+            ← Kembali
+          </button>
+          <button type="button" class="quiz-btn-next inline-flex items-center gap-2 px-7 py-3.5 bg-[#241B16] text-[#F7F2EA] hover:bg-[#C5A059] hover:text-white text-xs font-sans font-bold tracking-[0.16em] uppercase transition-all duration-300">
+            <span>Lanjut ke Langkah 3</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Nuansa Warna Favorit -->
+      <div id="quiz-step-3" class="quiz-step hidden">
+        <div class="mb-8 text-center sm:text-left">
+          <span class="text-[11px] font-sans font-bold tracking-[0.2em] uppercase text-[#C5A059]">Langkah 03</span>
+          <h3 class="font-display font-bold text-2xl text-[#2B231D] mt-1">Nuansa Warna Apa yang Paling Kamu Sukai?</h3>
+          <p class="text-sm text-[#6B5E55] mt-1">Warna ini bakal jadi panduan AI memilihkan pigmen alami karya.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-4 mb-8">
+          <!-- Option A -->
+          <div class="quiz-card selected" data-step="3" data-value="emas">
+            <div class="flex items-center justify-between mb-3">
+              <span class="w-7 h-7 rounded-full bg-gradient-to-tr from-[#C5A059] to-[#C86D51] shadow-sm"></span>
+              <div class="w-5 h-5 rounded-full border-2 border-[#C5A059] quiz-radio-circle flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#241B16] quiz-radio-check"></span>
+              </div>
+            </div>
+            <h4 class="font-display font-bold text-base text-[#2B231D] mb-1">Emas & Terracotta</h4>
+            <p class="text-xs text-[#6B5E55] leading-relaxed">Hangat dan megah, warna tanah liat bakar, kayu jati, serta kilau kuningan klasik.</p>
+          </div>
+
+          <!-- Option B -->
+          <div class="quiz-card" data-step="3" data-value="biru">
+            <div class="flex items-center justify-between mb-3">
+              <span class="w-7 h-7 rounded-full bg-gradient-to-tr from-[#1E3A8A] to-[#38BDF8] shadow-sm"></span>
+              <div class="w-5 h-5 rounded-full border-2 border-stone-300 quiz-radio-circle flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#241B16] quiz-radio-check opacity-0 scale-50 transition-all"></span>
+              </div>
+            </div>
+            <h4 class="font-display font-bold text-base text-[#2B231D] mb-1">Biru Samudra</h4>
+            <p class="text-xs text-[#6B5E55] leading-relaxed">Tenang dan sejuk, terinspirasi lautan nusantara dan pewarna alami daun nila (indigo).</p>
+          </div>
+
+          <!-- Option C -->
+          <div class="quiz-card" data-step="3" data-value="hijau">
+            <div class="flex items-center justify-between mb-3">
+              <span class="w-7 h-7 rounded-full bg-gradient-to-tr from-[#14532D] to-[#84CC16] shadow-sm"></span>
+              <div class="w-5 h-5 rounded-full border-2 border-stone-300 quiz-radio-circle flex items-center justify-center">
+                <span class="w-2.5 h-2.5 rounded-full bg-[#241B16] quiz-radio-check opacity-0 scale-50 transition-all"></span>
+              </div>
+            </div>
+            <h4 class="font-display font-bold text-base text-[#2B231D] mb-1">Hijau Alam Tropis</h4>
+            <p class="text-xs text-[#6B5E55] leading-relaxed">Asri dan segar, terinspirasi rindangnya hutan hujan tropis dan dedaunan pegunungan.</p>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-4 border-t border-[#EDE4D5]">
+          <button type="button" class="quiz-btn-prev inline-flex items-center gap-2 px-5 py-3 border border-[#2B231D]/30 hover:border-[#2B231D] text-xs font-sans font-bold tracking-[0.14em] uppercase text-[#2B231D] transition-colors">
+            ← Kembali
+          </button>
+          <button type="button" id="quiz-btn-analyze" class="inline-flex items-center gap-2 px-8 py-3.5 bg-[#C5A059] hover:bg-[#C2851D] text-white text-xs font-sans font-bold tracking-[0.18em] uppercase transition-all duration-300 shadow-lg active:scale-95">
+            <span>Analisis dengan AI Engine</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- SCANNING STATE: AI Matching Engine -->
+      <div id="matchmaker-scanner" class="hidden py-16 px-6 text-center">
+        <div class="max-w-md mx-auto ai-scanner-box bg-[#FAF7F2] border border-[#EDE4D5] p-8 rounded-sm shadow-inner mb-6">
+          <div class="w-16 h-16 mx-auto rounded-full bg-[#EDE4D5] border border-[#C5A059] flex items-center justify-center text-[#C5A059] mb-4">
+            <svg class="w-8 h-8 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          </div>
+          <p class="text-[11px] font-sans font-bold tracking-[0.24em] uppercase text-[#C5A059] mb-2">AI Matching Engine</p>
+          <h4 id="matchmaker-scanner-text" class="font-display font-semibold text-lg text-[#2B231D]">
+            Menganalisis harmoni estetika dengan filosofi Nusantara...
+          </h4>
+        </div>
+        <p class="text-xs text-[#6B5E55]">Memindai 1.340 tradisi suku bangsa & database perajin terakreditasi...</p>
+      </div>
+
+      <!-- RESULT STATE: AI Heritage Match Result -->
+      <div id="matchmaker-result" class="hidden">
+        <div class="bg-[#FAF7F2] border border-[#C5A059] rounded-sm overflow-hidden shadow-xl">
+          
+          <!-- Result Top Banner -->
+          <div class="bg-[#241B16] text-[#F7F2EA] px-6 sm:px-8 py-4 flex flex-wrap items-center justify-between gap-4 border-b border-[#C5A059]/30">
+            <div class="flex items-center gap-2.5">
+              <span class="w-2 h-2 rounded-full bg-[#C5A059] animate-ping"></span>
+              <span class="text-xs font-sans font-bold tracking-[0.18em] uppercase text-[#C5A059]">Pusaka Paling Selaras dengan Karaktermu</span>
+            </div>
+            <div class="inline-flex items-center gap-2 bg-[#C5A059]/20 border border-[#C5A059]/50 px-3 py-1 rounded-full text-xs font-bold text-[#F7F2EA]">
+              <span>Tingkat Kecocokan AI:</span>
+              <span id="match-score" class="text-[#C5A059] font-display text-sm font-bold">98%</span>
+            </div>
+          </div>
+
+          <!-- Card Content Body (Grid) -->
+          <div class="grid md:grid-cols-12 gap-8 p-6 sm:p-10 items-center">
+            <!-- Left: Hero Image (col 5) -->
+            <div class="md:col-span-5 relative group">
+              <div class="w-full h-72 sm:h-80 overflow-hidden rounded-sm bg-[#F4E8D3] border border-[#EDE4D5]">
+                <img id="match-img" src="assets/images/content/produk-batik-giriloyo.jpg" alt="Rekomendasi Pusaka" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+              </div>
+              <div class="absolute top-3 left-3 bg-[#241B16]/90 backdrop-blur-md text-[#F7F2EA] text-[10px] font-sans font-bold tracking-widest uppercase px-3 py-1 rounded-sm">
+                <span id="match-category">Wastra Pusaka</span>
+              </div>
+            </div>
+
+            <!-- Right: Tailored Narrative & Specs (col 7) -->
+            <div class="md:col-span-7 flex flex-col justify-between">
+              <div>
+                <p id="match-region" class="text-xs font-sans font-bold tracking-[0.2em] uppercase text-[#6B5E55] mb-1">Yogyakarta, Jawa</p>
+                <h3 id="match-title" class="font-display font-bold text-2xl sm:text-3xl text-[#2B231D] leading-tight mb-3">Batik Tulis Kawung Keraton</h3>
+                
+                <!-- AI Tailored Narrative -->
+                <div class="bg-[#F5EFE6] border-l-2 border-[#C5A059] p-4 rounded-r-sm mb-5">
+                  <p class="text-[11px] font-sans font-bold tracking-wider uppercase text-[#C5A059] mb-1">Narasi Personalisasi AI</p>
+                  <p id="match-narrative" class="text-xs sm:text-sm text-[#2B231D] leading-relaxed italic">
+                    "Berdasarkan analisis gaya hidup Modern Minimalis dan kebutuhan Dekorasi Ruang Tamu dengan palet Emas & Terracotta, AI merekomendasikan karya ini. Pola geometris simetris empat sisi Kawung mencerminkan kesucian hati dan keseimbangan kosmos Jawa yang sangat pas dengan estetika hunian kontemporermu."
+                  </p>
+                </div>
+
+                <!-- Specs -->
+                <div class="grid grid-cols-2 gap-3 mb-4 text-xs">
+                  <div>
+                    <span class="text-[#6B5E55] block">Teknik Pembuatan:</span>
+                    <strong id="match-craft" class="text-[#2B231D]">Canting Tulis Pewarna Soga Alami</strong>
+                  </div>
+                  <div>
+                    <span class="text-[#6B5E55] block">Perkiraan Investasi:</span>
+                    <strong id="match-price" class="text-[#2B231D] text-sm">Rp 2.850.000</strong>
+                  </div>
+                </div>
+
+                <!-- Verified Cultural Source -->
+                <div class="p-2.5 bg-[#FAF7F2] border border-[#EDE4D5] rounded text-[11px] text-[#6B5E55] flex items-start gap-1.5 mb-5">
+                  <span class="text-[#C5A059] flex-shrink-0">🏛️</span>
+                  <div><strong class="text-[#2B231D]">Rujukan Budaya Resmi:</strong> <span id="match-source">UNESCO Intangible Cultural Heritage (2009)</span></div>
+                </div>
+              </div>
+
+              <!-- Action CTAs -->
+              <div class="pt-4 border-t border-[#EDE4D5] flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  id="match-qv-btn"
+                  data-qv="1"
+                  class="inline-flex items-center gap-2 px-6 py-3.5 bg-[#241B16] hover:bg-[#C5A059] text-[#F7F2EA] hover:text-white text-xs font-sans font-bold tracking-[0.16em] uppercase transition-all duration-300 shadow-md"
+                >
+                  <span>Lihat Kisah Pengrajin & Beli</span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </button>
+                <button
+                  type="button"
+                  id="match-reset-btn"
+                  class="inline-flex items-center gap-1.5 px-4 py-3 border border-[#2B231D]/30 hover:border-[#2B231D] text-[#2B231D] text-xs font-sans font-bold tracking-[0.14em] uppercase transition-colors"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                  <span>Ulangi Kuis</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================================
+     N° 05 — PASAR NUSANI (Curated Marketplace)
+     ========================================================================= -->
+<section id="pasar" class="bg-[#F5EFE6] py-16 sm:py-24">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+    <!-- Chapter header -->
+    <div class="flex items-start gap-6 sm:gap-10 mb-12 sm:mb-16">
+      <span class="text-chapter leading-none select-none flex-shrink-0">05</span>
+      <div class="pt-2">
+        <span class="section-index-badge reveal">N° 05 · PASAR KRIYA</span>
+        <h2 class="reveal delay-100 font-display font-bold text-3xl sm:text-5xl text-[#2B231D] leading-tight">
+          Pasar Nusani<br><span class="text-[#C5A059] italic font-normal font-garamond">Karya Asli Pengrajin</span>
+        </h2>
+        <p class="reveal delay-200 mt-4 text-[#6B5E55] text-base max-w-xl font-sans leading-relaxed">Semua produk di sini dibuat langsung oleh para pengrajin dan maestro daerah, bukan barang cetakan pabrik. Dilengkapi catatan asal daerah, teknik pembuatan, dan verifikasi Warisan Budaya Takbenda (WBTb) Kemendikbudristek.</p>
+      </div>
+    </div>
+
+    <!-- Filter tabs (Isolated Card Elevation & 8pt Grid) -->
+    <div class="reveal inline-flex flex-wrap items-center gap-2 p-2 mb-10 card-isolated-elevation rounded-lg">
+      <button class="filter-tab active rounded-md" data-filter="all">Semua Karya</button>
+      <button class="filter-tab rounded-md" data-filter="wastra">Wastra & Tenun</button>
+      <button class="filter-tab rounded-md" data-filter="kriya">Kriya & Ukir</button>
+      <button class="filter-tab rounded-md" data-filter="musik">Instrumen</button>
+      <button class="filter-tab rounded-md" data-filter="seni">Seni Rupa</button>
+    </div>
+
+    <!-- Product grid — rendered by JS with 8pt spacing scale -->
+    <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8"></div>
+
+  </div>
+</section>
+
+<!-- =========================================================================
+     N° 06 — JURNAL NUSANTARA (Horizontal Slider)
+     ========================================================================= -->
+<section id="jurnal" class="bg-[#FAF7F2] py-16 sm:py-24">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12">
+
+    <!-- Chapter header + controls -->
+    <div class="flex items-end justify-between gap-6 mb-10">
+      <div class="flex items-start gap-6 sm:gap-10">
+        <span class="text-chapter leading-none select-none flex-shrink-0">06</span>
+        <div class="pt-2">
+          <span class="section-index-badge reveal">N° 06 · JURNAL NUSANTARA</span>
+          <h2 class="reveal delay-100 font-display font-bold text-3xl sm:text-5xl text-[#2B231D] leading-tight">
+            Jurnal Nusantara<br><span class="text-[#C5A059] italic font-normal font-garamond">Kisah & Liputan Lapangan</span>
+          </h2>
+          <p class="reveal delay-200 mt-3 text-[#6B5E55] text-sm sm:text-base max-w-xl font-sans leading-relaxed">Kisah nyata dari balik bilik tenun, kepulan asap dapur pengrajin, dan ruang kreasi para maestro penjaga tradisi Indonesia.</p>
+        </div>
+      </div>
+      <!-- Navigation -->
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <button id="journal-prev" class="w-10 h-10 border border-[#EDE4D5] flex items-center justify-center text-[#2B231D] hover:border-[#C5A059] hover:text-[#C5A059] transition-colors" aria-label="Sebelumnya">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button id="journal-next" class="w-10 h-10 border border-[#EDE4D5] flex items-center justify-center text-[#2B231D] hover:border-[#C5A059] hover:text-[#C5A059] transition-colors" aria-label="Berikutnya">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Slider track container -->
+    <div class="overflow-hidden">
+      <div id="journal-track" class="journal-track gap-4"></div>
+    </div>
+
+    <!-- Dot pagination -->
+    <div id="journal-dots" class="flex items-center gap-2 mt-6"></div>
+
+  </div>
+</section>
+
+<!-- =========================================================================
+     N° 07 — TESTIMONIALS (Clean Solid Editorial Cards)
+     ========================================================================= -->
+<section id="testimoni" class="bg-[#F5EFE6] py-20 sm:py-28">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12">
+    
+    <!-- Chapter Header -->
+    <div class="flex items-start gap-6 sm:gap-10 mb-14 sm:mb-18">
+      <span class="text-chapter leading-none select-none flex-shrink-0">07</span>
+      <div class="pt-2">
+        <span class="section-index-badge reveal">N° 07 · SUARA KOMUNITAS</span>
+        <h2 class="reveal delay-100 font-display font-bold text-3xl sm:text-5xl text-[#2B231D] leading-tight mb-4">
+          Apresiasi dari Para Penjaga<br><span class="text-[#C5A059] italic font-normal font-garamond">& Pecinta Warisan</span>
+        </h2>
+        <p class="reveal delay-200 text-[#6B5E55] text-sm sm:text-base font-sans max-w-2xl leading-relaxed">
+          Cerita langsung dari para peneliti, arsitek, dan maestro pengrajin yang membersamai misi Nusava di berbagai penjuru Nusantara.
+        </p>
+      </div>
+    </div>
+
+    <!-- 3 Clean Solid Cards Grid -->
+    <div class="grid md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
+      
+      <!-- Card 1: Solid Warm Ivory -->
+      <article class="testimonial-card reveal-popup delay-100 p-8 sm:p-10 rounded-2xl flex flex-col justify-between"
+               style="background: #FAF7F2; border: 1px solid rgba(180, 160, 140, 0.3);">
+        <div>
+          <!-- Verified Badge -->
+          <div class="flex items-center justify-between mb-6">
+            <span class="text-3xl text-[#C5A059] font-serif leading-none select-none">“</span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-sans font-bold uppercase tracking-wider bg-[#EDE4D5] text-[#2B231D]">
+              <svg class="w-3 h-3 text-[#C5A059]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              Terverifikasi
+            </span>
+          </div>
+          <!-- Quote -->
+          <p class="font-sans text-sm sm:text-base text-[#2B231D] leading-relaxed mb-8">
+            "Menemukan tenun ikat dengan pewarna alam asli Sumba kini jauh lebih transparan dan terpercaya lewat kurasi Nusava."
+          </p>
+        </div>
+        <!-- Reviewer -->
+        <div class="flex items-center gap-4 pt-6 border-t border-[#EDE4D5]">
+          <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border border-[#C5A059]/40 bg-[#EDE4D5] flex items-center justify-center font-display font-bold text-sm text-[#2B231D]">
+            JS
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-base text-[#2B231D]">Janie Stewart</h3>
+            <p class="text-xs text-[#6B5E55] font-sans">Peneliti Tekstil Tradisional</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2: Solid Warm Ivory -->
+      <article class="testimonial-card reveal-popup delay-200 p-8 sm:p-10 rounded-2xl flex flex-col justify-between"
+               style="background: #FAF7F2; border: 1px solid rgba(180, 160, 140, 0.3);">
+        <div>
+          <!-- Verified Badge -->
+          <div class="flex items-center justify-between mb-6">
+            <span class="text-3xl text-[#C5A059] font-serif leading-none select-none">“</span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-sans font-bold uppercase tracking-wider bg-[#EDE4D5] text-[#2B231D]">
+              <svg class="w-3 h-3 text-[#C5A059]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              Terverifikasi
+            </span>
+          </div>
+          <!-- Quote -->
+          <p class="font-sans text-sm sm:text-base text-[#2B231D] leading-relaxed mb-8">
+            "Sistem kustomisasi motif memudahkan kami memesan panel ukir Dayak langsung ke empunya di pedalaman Kalimantan."
+          </p>
+        </div>
+        <!-- Reviewer -->
+        <div class="flex items-center gap-4 pt-6 border-t border-[#EDE4D5]">
+          <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border border-[#C5A059]/40 bg-[#EDE4D5] flex items-center justify-center font-display font-bold text-sm text-[#2B231D]">
+            AW
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-base text-[#2B231D]">Arya Wicaksana</h3>
+            <p class="text-xs text-[#6B5E55] font-sans">Arsitek Vernakular</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3: Featured Solid Dark Espresso -->
+      <article class="testimonial-card reveal-popup delay-300 p-8 sm:p-10 rounded-2xl flex flex-col justify-between shadow-xl"
+               style="background: #241B16; color: #FAF7F2; border: 1px solid #C5A059;">
+        <div>
+          <!-- Verified Badge -->
+          <div class="flex items-center justify-between mb-6">
+            <span class="text-3xl text-[#C5A059] font-serif leading-none select-none">“</span>
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-sans font-bold uppercase tracking-wider bg-[#2B231D] text-[#C5A059] border border-[#C5A059]/40">
+              <svg class="w-3 h-3 text-[#C5A059]" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              Mitra Maestro
+            </span>
+          </div>
+          <!-- Quote -->
+          <p class="font-sans text-sm sm:text-base text-[#FAF7F2] leading-relaxed mb-8">
+            "Nusava menghubungkan bengkel kriya kami di Gianyar langsung dengan apresiasi dunia tanpa kehilangan makna filosofis karya."
+          </p>
+        </div>
+        <!-- Reviewer -->
+        <div class="flex items-center gap-4 pt-6 border-t border-[rgba(197,160,89,0.3)]">
+          <div class="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 border-2 border-[#C5A059] bg-[#2B231D] flex items-center justify-center font-display font-bold text-sm text-[#C5A059]">
+            WS
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-base text-[#FAF7F2]">Wayan Sukadana</h3>
+            <p class="text-xs text-[#C5A059] font-sans">Maestro Ukir Kayu</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================
+     N° 08b — TANYA JAWAB / FAQ (Two-Column Clean Split)
+     ========================================================================= -->
+<section id="faq" class="bg-[#FAF7F2] py-20 sm:py-28">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12">
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      
+      <!-- Left: Sticky Header Area -->
+      <div class="lg:col-span-5 sticky top-24">
+        <div class="flex items-start gap-5 sm:gap-7 mb-5">
+          <span class="text-chapter leading-none select-none flex-shrink-0">08</span>
+          <div class="pt-2">
+            <span class="section-index-badge reveal">N° 08 · TANYA JAWAB (FAQ)</span>
+            <h2 class="reveal delay-100 font-display font-bold text-3xl sm:text-4xl text-[#2B231D] leading-tight">
+              Pertanyaan Seputar<br><span class="text-[#C5A059] italic font-normal font-garamond">Pelestarian & Kurasi</span>
+            </h2>
+          </div>
+        </div>
+        <p class="reveal delay-200 text-[#6B5E55] text-sm sm:text-base font-sans leading-relaxed mb-6">
+          Memastikan setiap langkah pelestarian budaya, interaksi digital, dan transaksi pengrajin berjalan transparan serta bermakna.
+        </p>
+        <div class="reveal delay-300 pt-6 border-t border-[#EDE4D5]">
+          <p class="text-xs text-[#6B5E55] font-sans mb-2 font-medium">Punya pertanyaan seputar kriya atau kurasi budaya?</p>
+          <a href="#ai-kustomisasi" class="inline-flex items-center gap-2 text-xs font-sans font-bold tracking-wider text-[#C5A059] uppercase hover:text-[#2B231D] transition-colors">
+            Hubungi Tim Kurator Kami →
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: Accordion Items -->
+      <div class="lg:col-span-7 divide-y divide-[#EDE4D5] border-t border-b border-[#EDE4D5]">
+        
+        <!-- FAQ Item 1 -->
+        <div class="faq-item group py-5 sm:py-6">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 text-left cursor-pointer select-none" aria-expanded="false">
+            <span class="font-display text-base sm:text-lg font-semibold text-[#2B231D] group-hover:text-[#C5A059] transition-colors">
+              Bagaimana proses verifikasi keaslian karya kriya dan wastra di Nusava?
+            </span>
+            <span class="faq-icon flex-shrink-0">
+              +
+            </span>
+          </button>
+          <div class="faq-content">
+            <div class="overflow-hidden">
+              <p class="pt-4 text-xs sm:text-sm text-[#6B5E55] font-sans leading-relaxed">
+                Setiap karya melewati kurasi langsung bersama kurator budaya dan paguyuban pengrajin lokal untuk memastikan filosofi, bahan alami, dan teknik otentik tetap terjaga.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="faq-item group py-5 sm:py-6">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 text-left cursor-pointer select-none" aria-expanded="false">
+            <span class="font-display text-base sm:text-lg font-semibold text-[#2B231D] group-hover:text-[#C5A059] transition-colors">
+              Apakah konsultasi kustomisasi motif dengan AI dikenakan biaya?
+            </span>
+            <span class="faq-icon flex-shrink-0">
+              +
+            </span>
+          </button>
+          <div class="faq-content">
+            <div class="overflow-hidden">
+              <p class="pt-4 text-xs sm:text-sm text-[#6B5E55] font-sans leading-relaxed">
+                Layanan Kurator AI Nusava bebas digunakan untuk memetakan filosofi dan mencocokkan ide kustomisasi Anda dengan sentra pengrajin yang relevan.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="faq-item group py-5 sm:py-6">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 text-left cursor-pointer select-none" aria-expanded="false">
+            <span class="font-display text-base sm:text-lg font-semibold text-[#2B231D] group-hover:text-[#C5A059] transition-colors">
+              Bagaimana sistem pengiriman karya seni dan keramik bernilai tinggi?
+            </span>
+            <span class="faq-icon flex-shrink-0">
+              +
+            </span>
+          </button>
+          <div class="faq-content">
+            <div class="overflow-hidden">
+              <p class="pt-4 text-xs sm:text-sm text-[#6B5E55] font-sans leading-relaxed">
+                Pengiriman dilengkapi kemasan berstandar preservasi budaya, pelindung khusus, dan asuransi penuh langsung dari sentra pengrajin daerah.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="faq-item group py-5 sm:py-6">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 text-left cursor-pointer select-none" aria-expanded="false">
+            <span class="font-display text-base sm:text-lg font-semibold text-[#2B231D] group-hover:text-[#C5A059] transition-colors">
+              Bagaimana Nusava mendukung kemandirian UMKM lokal?
+            </span>
+            <span class="faq-icon flex-shrink-0">
+              +
+            </span>
+          </button>
+          <div class="faq-content">
+            <div class="overflow-hidden">
+              <p class="pt-4 text-xs sm:text-sm text-[#6B5E55] font-sans leading-relaxed">
+                100% nilai transaksi kriya disalurkan langsung kepada pengrajin lokal tanpa potongan perantara yang merugikan.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================
+     N° 09 — TIM PENGEMBANG / TEAM SHOWCASE (SMKN 1 Denpasar)
+     ========================================================================= -->
+<section id="tim" class="bg-[#F5EFE6] py-20 sm:py-28 relative overflow-hidden">
+  
+  <!-- Subtle Solid Watermark Typography -->
+  <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 flex items-center justify-center select-none pointer-events-none z-0" aria-hidden="true">
+    <span class="font-display font-bold tracking-[0.25em] text-[clamp(4rem,11vw,9rem)] uppercase text-[#C5A059]/[0.12] leading-none">
+      NUSAVA
+    </span>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+    
+    <!-- Chapter Header -->
+    <div class="flex items-start gap-6 sm:gap-10 mb-16 sm:mb-20">
+      <span class="text-chapter leading-none select-none flex-shrink-0">09</span>
+      <div class="pt-2">
+        <span class="section-index-badge reveal">N° 09 · TIM PENGEMBANG</span>
+        <h2 class="reveal delay-100 font-display font-bold text-3xl sm:text-5xl text-[#2B231D] leading-tight mb-4">
+          Dedikasi di Balik Nusava<br><span class="text-[#C5A059] italic font-normal font-garamond">Perawat Tradisi Digital</span>
+        </h2>
+        <p class="reveal delay-200 text-[#6B5E55] text-sm sm:text-base font-sans max-w-2xl leading-relaxed">
+          Kolaborasi talenta muda SMKN 1 Denpasar yang memadukan keanggunan warisan budaya Nusantara dengan ketepatan rekayasa web modern.
+        </p>
+      </div>
+    </div>
+
+    <!-- 3 Team Members Grid -->
+    <div class="grid sm:grid-cols-3 gap-8 lg:gap-12 max-w-4xl mx-auto">
+      
+      <!-- Member 1: Rangga -->
+      <div class="team-member reveal-popup delay-100 flex flex-col items-center text-center group">
+        <!-- Minimalist Circular Frame -->
+        <div class="team-portrait-frame w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden border-2 border-[#C5A059] bg-[#FAF7F2] p-1.5 shadow-sm mb-5">
+          <div class="w-full h-full rounded-full bg-[#EDE4D5] flex items-center justify-center font-display font-bold text-2xl text-[#2B231D]">
+            RG
+          </div>
+        </div>
+        <h3 class="font-display font-bold text-xl text-[#2B231D] mb-1 group-hover:text-[#C5A059] transition-colors">
+          Rangga
+        </h3>
+        <p class="text-xs sm:text-sm font-semibold text-[#2B231D] font-sans mb-1">
+          Lead Systems Architect & UI Engineer
+        </p>
+        <span class="text-[11px] font-sans text-[#6B5E55] uppercase tracking-wider">
+          SMKN 1 Denpasar
+        </span>
+      </div>
+
+      <!-- Member 2: Ryan -->
+      <div class="team-member reveal-popup delay-200 flex flex-col items-center text-center group">
+        <!-- Minimalist Circular Frame -->
+        <div class="team-portrait-frame w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden border-2 border-[#C5A059] bg-[#FAF7F2] p-1.5 shadow-sm mb-5">
+          <div class="w-full h-full rounded-full bg-[#EDE4D5] flex items-center justify-center font-display font-bold text-2xl text-[#2B231D]">
+            RY
+          </div>
+        </div>
+        <h3 class="font-display font-bold text-xl text-[#2B231D] mb-1 group-hover:text-[#C5A059] transition-colors">
+          Ryan
+        </h3>
+        <p class="text-xs sm:text-sm font-semibold text-[#2B231D] font-sans mb-1">
+          Cultural Researcher & Creative Director
+        </p>
+        <span class="text-[11px] font-sans text-[#6B5E55] uppercase tracking-wider">
+          SMKN 1 Denpasar
+        </span>
+      </div>
+
+      <!-- Member 3: Kevin -->
+      <div class="team-member reveal-popup delay-300 flex flex-col items-center text-center group">
+        <!-- Minimalist Circular Frame -->
+        <div class="team-portrait-frame w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden border-2 border-[#C5A059] bg-[#FAF7F2] p-1.5 shadow-sm mb-5">
+          <div class="w-full h-full rounded-full bg-[#EDE4D5] flex items-center justify-center font-display font-bold text-2xl text-[#2B231D]">
+            KV
+          </div>
+        </div>
+        <h3 class="font-display font-bold text-xl text-[#2B231D] mb-1 group-hover:text-[#C5A059] transition-colors">
+          Kevin
+        </h3>
+        <p class="text-xs sm:text-sm font-semibold text-[#2B231D] font-sans mb-1">
+          Front-End Engineer & Interaction Specialist
+        </p>
+        <span class="text-[11px] font-sans text-[#6B5E55] uppercase tracking-wider">
+          SMKN 1 Denpasar
+        </span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================
+     HIGH-IMPACT CTA BANNER (Solid Flat Luxury Canvas)
+     ========================================================================= -->
+<section id="cta-banner" class="bg-[#F5EFE6] px-6 py-12 sm:py-16">
+  <div class="max-w-[1200px] mx-auto rounded-[24px] p-8 sm:p-16 lg:p-20 text-center shadow-2xl relative"
+       style="background: #241B16; border: 1px solid rgba(197, 160, 89, 0.3);">
+    
+    <h2 class="reveal delay-100 font-display font-bold text-3xl sm:text-5xl lg:text-6xl text-[#F5EFE6] leading-tight max-w-4xl mx-auto mb-6">
+      Mari Rayakan dan Lestarikan<br><span class="text-[#C5A059] italic font-normal font-garamond">Mahakarya Nusantara Bersama</span>
+    </h2>
+    
+    <p class="reveal delay-200 text-[#FAF7F2]/80 text-sm sm:text-base lg:text-lg font-sans max-w-2xl mx-auto mb-10 leading-relaxed">
+      Mulai dari eksplorasi ragam budaya, konsultasi kriya kustom, hingga mendukung kemandirian pengrajin lokal di 38 provinsi.
+    </p>
+
+    <div class="reveal delay-300 flex flex-wrap items-center justify-center gap-4">
+      <a href="#jelajah" class="cta-btn-primary inline-flex items-center justify-center text-xs font-sans tracking-[0.16em] uppercase">
+        MULAI JELAJAHI PUSAKA
+      </a>
+      <a href="#ai-kustomisasi" class="cta-btn-secondary inline-flex items-center justify-center text-xs font-sans font-semibold tracking-[0.16em] uppercase text-[#F7F2EA]">
+        KONSULTASI KURATOR AI
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================================
+     CURVED SECTION TRANSITION : Main Content into Footer (Lengkung Klasik Beranimasi)
+     ========================================================================= -->
+<div class="curved-divider-down relative z-10 -mb-px pointer-events-none" aria-hidden="true">
+  <svg class="w-full fill-[#241B16] block" viewBox="0 0 1440 96" preserveAspectRatio="none">
+    <defs>
+      <linearGradient id="goldCurveGlow3" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#C5A059" stop-opacity="0" />
+        <stop offset="30%" stop-color="#C5A059" stop-opacity="0.3" />
+        <stop offset="50%" stop-color="#E5C788" stop-opacity="0.95" />
+        <stop offset="70%" stop-color="#C5A059" stop-opacity="0.3" />
+        <stop offset="100%" stop-color="#C5A059" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+    <path d="M0,0 C480,96 960,96 1440,0 L1440,96 L0,96 Z"></path>
+    <!-- Animated Golden Arch Contour Wave -->
+    <path d="M0,0 C480,96 960,96 1440,0" fill="none" stroke="url(#goldCurveGlow3)" stroke-width="2.5" class="curve-gold-stroke"></path>
+  </svg>
+</div>
+
+<!-- =========================================================================
+     FOOTER — Carolyn Lee Style Two-Tier Footer with Bottom Video
+     ========================================================================= -->
+<footer class="bg-[#241B16] text-[#F7F2EA] overflow-hidden">
+  <!-- Tier 1: Carolyn Lee Editorial Top Half -->
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 pt-16 sm:pt-24 pb-16 sm:pb-20">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+      <!-- Big Editorial Brand (Carolyn Lee Style) -->
+      <div class="lg:col-span-6 flex flex-col justify-between">
+        <div>
+          <a href="#hero" class="inline-block group mb-4">
+            <span class="font-garamond text-5xl sm:text-7xl font-normal italic text-[#F7F2EA] tracking-tight block">
+              Nusa<span class="text-[#C5A059] not-italic font-semibold">va</span>
+            </span>
+          </a>
+          <p class="text-xs font-sans font-bold tracking-[0.24em] uppercase text-[#C5A059] mb-6">
+            Merawat Budaya · Menggerakkan Karya
+          </p>
+          <p class="font-sans text-sm sm:text-base text-[#F7F2EA]/75 leading-relaxed max-w-md">
+            Platform digital inisiatif siswa <strong class="text-[#F7F2EA] font-semibold">SMKN 1 Denpasar</strong> yang menjembatani keagungan warisan budaya Nusantara dengan ekosistem digital dan pasar global.
+          </p>
+        </div>
+        
+        <div class="mt-8 pt-8 border-t border-white/10 flex items-center gap-6 text-xs text-[#F7F2EA]/60 font-sans">
+          <span>Inisiatif Vokasi SMK</span>
+          <span>•</span>
+          <span>Karya Anak Bangsa</span>
+          <span>•</span>
+          <span>Pelestarian Pusaka</span>
+        </div>
+      </div>
+
+      <!-- Links Columns (Carolyn Lee Right Half: Pages, Categories, Warta) -->
+      <div class="lg:col-span-6 grid grid-cols-2 sm:grid-cols-3 gap-8">
+        <div>
+          <h4 class="text-[11px] font-sans font-bold tracking-[0.22em] uppercase text-[#C5A059] mb-5">Navigasi</h4>
+          <ul class="space-y-3 font-sans text-sm">
+            <li><a href="#hero" class="footer-link">Beranda</a></li>
+            <li><a href="#jelajah" class="footer-link">Peta Wilayah</a></li>
+            <li><a href="#ragam-budaya" class="footer-link">Ragam Budaya</a></li>
+            <li><a href="#produk" class="footer-link">Empat Pilar</a></li>
+            <li><a href="#ai-kustomisasi" class="footer-link">Asisten AI</a></li>
+            <li><a href="#ai-matchmaker" class="footer-link">Kuis Pusaka</a></li>
+            <li><a href="#pasar" class="footer-link">Pasar Kriya</a></li>
+            <li><a href="#jurnal" class="footer-link">Jurnal Nusantara</a></li>
+            <li><a href="#testimoni" class="footer-link">Testimoni</a></li>
+            <li><a href="#faq" class="footer-link">Tanya Jawab (FAQ)</a></li>
+            <li><a href="#tim" class="footer-link">Tim Pengembang</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-[11px] font-sans font-bold tracking-[0.22em] uppercase text-[#C5A059] mb-5">Kategori Kriya</h4>
+          <ul class="space-y-3 font-sans text-sm">
+            <li><a href="#pasar" class="footer-link">Wastra & Tenun</a></li>
+            <li><a href="#pasar" class="footer-link">Kriya Kayu & Ukir</a></li>
+            <li><a href="#pasar" class="footer-link">Instrumen Musik</a></li>
+            <li><a href="#pasar" class="footer-link">Seni Rupa & Lukis</a></li>
+            <li><a href="#pasar" class="footer-link">Aksesori Tradisi</a></li>
+            <li><a href="#pasar" class="footer-link">Keramik & Logam</a></li>
+          </ul>
+        </div>
+
+        <div class="col-span-2 sm:col-span-1">
+          <h4 class="text-[11px] font-sans font-bold tracking-[0.22em] uppercase text-[#C5A059] mb-5">Warta Budaya</h4>
+          <p class="text-xs text-[#F7F2EA]/70 leading-relaxed mb-4">Dapatkan kurasi mingguan cerita pusaka langsung ke email Anda.</p>
+          <form id="newsletter-form" class="space-y-2.5">
+            <input type="email" placeholder="alamat@email.com" class="w-full px-3.5 py-2.5 bg-white/5 border border-white/15 text-[#F7F2EA] text-xs placeholder-white/30 focus:outline-none focus:border-[#C5A059] transition-colors rounded-none" required>
+            <button type="submit" class="w-full py-2.5 bg-[#C5A059] hover:bg-[#B38F46] text-white text-[10px] font-sans font-bold tracking-[0.2em] uppercase transition-colors">Berlangganan</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tier 2: Cinematic Wonderful Indonesia Video Bottom Half (Carolyn Lee Bottom Media Half) -->
+  <div class="relative w-full h-[340px] sm:h-[440px] lg:h-[500px] border-t border-white/15 overflow-hidden group">
+    <!-- Looping Background Video -->
+    <div class="video-bg-container absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+      <iframe
+        class="yt-bg-iframe"
+        src="https://www.youtube.com/embed/IrcoYCD9-nM?autoplay=1&mute=1&loop=1&playlist=IrcoYCD9-nM&controls=0&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&enablejsapi=1"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <!-- Custom Theme Tint & Vignette Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-t from-[#241B16] via-[#241B16]/65 to-[#241B16]/30 backdrop-contrast-[1.08] pointer-events-none"></div>
+
+    <!-- Video Half Content -->
+    <div class="relative z-10 h-full max-w-7xl mx-auto px-6 lg:px-12 flex flex-col justify-between py-10 sm:py-14">
+      <!-- Quote / Atmospheric Message in Center -->
+      <div class="max-w-2xl my-auto">
+        <span class="inline-block text-[#C5A059] text-xs font-sans font-bold tracking-[0.28em] uppercase mb-3">Pesona Budaya Nusantara</span>
+        <blockquote class="font-garamond italic text-2xl sm:text-4xl lg:text-5xl text-[#F7F2EA] leading-tight drop-shadow-md">
+          “Dari tangan para pengrajin daerah, untuk kebanggaan Indonesia di mata dunia.”
+        </blockquote>
+      </div>
+
+      <!-- Bottom Bar: SMKN 1 Denpasar Attribution, Copyright & Socials -->
+      <div class="pt-6 border-t border-white/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-xs font-sans text-[#F7F2EA]/80 tracking-wide">
+          © 2026 <strong class="text-white font-medium">Nusava</strong> · Inisiatif Vokasi Siswa SMKN 1 Denpasar. Seluruh Hak Cipta Dilindungi.
+        </p>
+
+        <!-- Social Icons & Back to Top -->
+        <div class="flex items-center gap-4">
+          <a href="#" class="w-8 h-8 rounded-full border border-white/25 flex items-center justify-center text-white/70 hover:text-white hover:border-[#C5A059] transition-all" aria-label="Instagram">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="#" class="w-8 h-8 rounded-full border border-white/25 flex items-center justify-center text-white/70 hover:text-white hover:border-[#C5A059] transition-all" aria-label="TikTok">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          </a>
+          <a href="#" class="w-8 h-8 rounded-full border border-white/25 flex items-center justify-center text-white/70 hover:text-white hover:border-[#C5A059] transition-all" aria-label="YouTube">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+          </a>
+          <a href="#hero" class="ml-2 px-3 py-1.5 rounded-full border border-white/20 text-[10px] font-sans font-bold tracking-widest uppercase text-white/80 hover:text-white hover:border-white transition-all" aria-label="Kembali ke atas">
+            ↑ Atas
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- =========================================================================
+     VIDEO MODAL — fullscreen play
+     ========================================================================= -->
+<div id="video-modal" class="hidden fixed inset-0 z-[100] bg-black/92 flex items-center justify-center p-4 sm:p-8" role="dialog" aria-modal="true" aria-label="Video Wonderful Indonesia">
+  <button id="video-modal-close" class="absolute top-5 right-5 w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white hover:border-white/70 transition-all z-20" aria-label="Tutup">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+  </button>
+  <div class="w-full max-w-5xl aspect-video rounded-lg overflow-hidden shadow-2xl relative bg-black">
+    <iframe
+      id="modal-youtube-iframe"
+      class="w-full h-full"
+      src=""
+      data-src="https://www.youtube.com/embed/IrcoYCD9-nM?autoplay=1&rel=0&playsinline=1&enablejsapi=1"
+      title="YouTube video player"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
+
+<!-- =========================================================================
+     QUICK VIEW MODAL
+     ========================================================================= -->
+<div id="quick-view-modal" class="hidden fixed inset-0 z-[90] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8" role="dialog" aria-modal="true">
+  <div id="qv-modal-dialog" class="bg-[#FAF7F2] max-w-2xl w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto rounded-sm border border-[#EDE4D5] shadow-2xl">
+    <button id="qv-close" class="absolute top-4 right-4 text-[#2B231D] hover:text-[#C5A059] transition-colors" aria-label="Tutup">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+    <div id="qv-content"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="hide fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-5 py-3 bg-[#241B16] text-[#F7F2EA] text-xs font-sans tracking-wide shadow-lg flex items-center gap-3" role="status" aria-live="polite">
+  <svg class="w-4 h-4 text-[#C5A059] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+  <span id="toast-msg">Ditambahkan ke keranjang</span>
+</div>
+
+<!-- =========================================================================
+     JavaScript
+     ========================================================================= -->
+<script src="js/main.js"></script>
+</body>
+</html>
